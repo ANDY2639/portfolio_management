@@ -1,0 +1,34 @@
+{
+  "name": "@portfolio/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "oxlint src",
+    "lint:fix": "oxlint src --fix",
+    "format": "oxfmt src --check",
+    "format:write": "oxfmt src --write",
+    "types:check": "tsc --noEmit",
+    "clean:build": "pnpm dlx rimraf .next",
+    "clean:nm": "pnpm dlx rimraf node_modules",
+    "clean": "pnpm clean:build && pnpm clean:nm"
+  },
+  "dependencies": {
+    "@portfolio/contracts": "workspace:*",
+    "next": "16.2.9",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "oxfmt": "^0.40.0",
+    "oxlint": "^1.55.0",
+    "tailwindcss": "^4",
+    "typescript": "~5.9.3"
+  }
+}

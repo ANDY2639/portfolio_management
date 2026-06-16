@@ -1,0 +1,38 @@
+{
+  "name": "@portfolio/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared ts-rest + Zod contracts for the portfolio monorepo",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/fixup-cjs.js",
+    "test": "node --test tests/**/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src --ext .ts",
+    "clean:build": "pnpm dlx rimraf dist",
+    "clean:nm": "pnpm dlx rimraf node_modules",
+    "clean": "pnpm clean:build && pnpm clean:nm"
+  },
+  "peerDependencies": {
+    "@ts-rest/core": "^3.52.1"
+  },
+  "devDependencies": {
+    "@ts-rest/core": "^3.52.1",
+    "typescript": "^5.9.3"
+  }
+}

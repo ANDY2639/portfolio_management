@@ -1,0 +1,173 @@
+---
+import type { Education } from '../../lib/types';
+import { useTranslations, formatDate } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  education: Education[];
+  error: string | null;
+  lang: Lang;
+}
+
+const { education, error, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section edu-section" id="education" aria-labelledby="education-title">
+  <div class="container">
+    <p class="section-tag">education.ts</p>
+    <h2 class="section-heading" id="education-title">{t('education.title')}</h2>
+    <p class="section-lead">{t('education.subtitle')}</p>
+
+    {error && <p class="state-err" role="alert">// error: {t('education.error')}</p>}
+    {!error && education.length === 0 && <p class="state-empty">// {t('education.empty')}</p>}
+
+    {!error && education.length > 0 && (
+      <div class="edu-list">
+        {education.map((item, idx) => {
+          const start = formatDate(item.startDate, lang);
+          const end   = item.isCurrent ? t('education.present') : formatDate(item.endDate, lang);
+          return (
+            <article class="edu-item" style={`--idx:${idx}`}>
+              <div class="edu-left">
+                <span class="edu-idx" aria-hidden="true">{String(idx + 1).padStart(2,'0')}</span>
+                <div class="edu-info">
+                  <h3 class="edu-degree">{item.degree}</h3>
+                  <p class="edu-institution">{item.institution}</p>
+                  {item.field && <p class="edu-field">// {item.field}</p>}
+                </div>
+              </div>
+              <div class="edu-right">
+                <time class="edu-dates">{start}{end ? ` → ${end}` : ''}</time>
+                {item.description && <p class="edu-desc">{item.description}</p>}
+                {item.certificationsUrl && (
+                  <a
+                    href={item.certificationsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="edu-cert-link"
+                  >
+                    <span aria-hidden="true">&gt;&nbsp;</span>{t('education.certifications')}
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .edu-section {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
+
+  .edu-list {
+    margin-top: var(--sp-10);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .edu-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 400ms var(--ease-out) both;
+    animation-delay: calc(var(--idx, 0) * 60ms);
+    transition: background var(--dur-fast);
+  }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-item:hover { background: var(--surface-2); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .edu-left {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-5);
+    padding: var(--sp-6);
+    border-right: 1px solid var(--border);
+  }
+
+  .edu-idx {
+    font-size: var(--text-xs);
+    color: var(--fg-4);
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 24px;
+    margin-top: 2px;
+    user-select: none;
+  }
+
+  .edu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .edu-degree {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .edu-institution {
+    font-size: var(--text-sm);
+    color: var(--green);
+  }
+
+  .edu-field {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .edu-right {
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .edu-dates {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    letter-spacing: .04em;
+  }
+
+  .edu-desc {
+    font-size: var(--text-sm);
+    color: var(--fg-2);
+    line-height: 1.75;
+  }
+
+  .edu-cert-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 2px var(--sp-3);
+    transition: background var(--dur-fast), color var(--dur-fast);
+    width: fit-content;
+  }
+  .edu-cert-link:hover {
+    background: var(--green);
+    color: #0a0a0a;
+  }
+
+  @media (max-width: 640px) {
+    .edu-item { grid-template-columns: 1fr; }
+    .edu-left { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>

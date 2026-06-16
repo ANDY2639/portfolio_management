@@ -1,0 +1,186 @@
+---
+import type { Certification } from '../../lib/types';
+import { useTranslations, formatDate } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  certifications: Certification[];
+  error: string | null;
+  lang: Lang;
+}
+
+const { certifications, error, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section cert-section" id="certifications" aria-labelledby="cert-title">
+  <div class="container">
+    <p class="section-tag">certifications.ts</p>
+    <h2 class="section-heading" id="cert-title">{t('certs.title')}</h2>
+    <p class="section-lead">{t('certs.subtitle')}</p>
+
+    {error && <p class="state-err" role="alert">// error: {t('certs.error')}</p>}
+    {!error && certifications.length === 0 && <p class="state-empty">// {t('certs.empty')}</p>}
+
+    {!error && certifications.length > 0 && (
+      <div class="cert-list">
+        {certifications.map((item, idx) => (
+          <article class="cert-item" style={`--idx:${idx}`}>
+            <div class="cert-left">
+              <span class="cert-idx" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+              <div class="cert-info">
+                <h3 class="cert-name">{item.name}</h3>
+                <p class="cert-issuer">{item.issuer}</p>
+                <time class="cert-date" datetime={item.issuedDate}>
+                  {formatDate(item.issuedDate, lang)}
+                </time>
+              </div>
+            </div>
+            <div class="cert-right">
+              {item.keywords.length > 0 && (
+                <ul class="cert-tags" aria-label="Keywords">
+                  {item.keywords.map((kw) => (
+                    <li class="cert-tag">{kw}</li>
+                  ))}
+                </ul>
+              )}
+              {item.url && (
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cert-link"
+                >
+                  <span aria-hidden="true">&gt;&nbsp;</span>{t('certs.view')}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .cert-section {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
+
+  .cert-list {
+    margin-top: var(--sp-10);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .cert-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 400ms var(--ease-out) both;
+    animation-delay: calc(var(--idx, 0) * 60ms);
+    transition: background var(--dur-fast);
+  }
+  .cert-item:last-child { border-bottom: none; }
+  .cert-item:hover { background: var(--surface-2); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cert-left {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-5);
+    padding: var(--sp-6);
+    border-right: 1px solid var(--border);
+  }
+
+  .cert-idx {
+    font-size: var(--text-xs);
+    color: var(--fg-4);
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 24px;
+    margin-top: 2px;
+    user-select: none;
+  }
+
+  .cert-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cert-name {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.4;
+  }
+
+  .cert-issuer {
+    font-size: var(--text-sm);
+    color: var(--green);
+  }
+
+  .cert-date {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    letter-spacing: .04em;
+    margin-top: 2px;
+  }
+
+  .cert-right {
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    justify-content: center;
+  }
+
+  .cert-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+  }
+
+  .cert-tag {
+    font-size: 10px;
+    color: var(--fg-3);
+    border: 1px solid var(--border);
+    padding: 2px var(--sp-2);
+    letter-spacing: .04em;
+    transition: color var(--dur-fast), border-color var(--dur-fast);
+  }
+  .cert-item:hover .cert-tag {
+    color: var(--fg-2);
+    border-color: var(--border-hi);
+  }
+
+  .cert-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 2px var(--sp-3);
+    width: fit-content;
+    transition: background var(--dur-fast), color var(--dur-fast);
+  }
+  .cert-link:hover {
+    background: var(--green);
+    color: #0a0a0a;
+  }
+
+  @media (max-width: 640px) {
+    .cert-item { grid-template-columns: 1fr; }
+    .cert-left { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>

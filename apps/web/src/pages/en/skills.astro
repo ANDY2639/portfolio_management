@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SkillsSection from '../../components/sections/SkillsSection.astro';
+import { getCertifications, getSkills } from '../../lib/portfolio-data';
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+const lang: Lang = 'en';
+const t = useTranslations(lang);
+
+const [skillsResult, certsResult] = await Promise.all([getSkills(), getCertifications()]);
+
+const certCountBySkill: Record<string, number> = {};
+for (const cert of certsResult.data) {
+  for (const kw of cert.keywords) {
+    const kwLower = kw.trim().toLowerCase();
+    for (const skill of skillsResult.data) {
+      if (skill.name.trim().toLowerCase() === kwLower) {
+        certCountBySkill[skill.name] = (certCountBySkill[skill.name] ?? 0) + 1;
+      }
+    }
+  }
+}
+---
+<Layout title={`skills() — Andrés Guerrero`} description={t('meta.skills.description')} lang={lang} page="skills">
+  <section class="section page-hero" aria-labelledby="skills-page-title">
+    <div class="container">
+      <p class="section-tag">skills.json</p>
+      <h1 class="section-heading" id="skills-page-title">{t('skills.title')}</h1>
+      <p class="section-lead">{t('skills.subtitle')}</p>
+    </div>
+  </section>
+  <SkillsSection skills={skillsResult.data} error={skillsResult.error} lang={lang} certCountBySkill={certCountBySkill} />
+</Layout>
+<style>
+  .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
+</style>

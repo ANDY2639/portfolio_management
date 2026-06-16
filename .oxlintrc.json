@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "import", "jsx-a11y", "unicorn"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "react/jsx-key": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/exhaustive-deps": "warn",
+    "typescript/no-explicit-any": "warn",
+    "typescript/no-unused-vars": "error",
+    "import/no-cycle": "warn",
+    "import/no-unassigned-import": "off",
+    "jsx-a11y/alt-text": "warn"
+  },
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.2"
+    }
+  },
+  "options": {
+    "typeAware": true
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**", ".next/**", ".turbo/**"],
+  "overrides": [
+    {
+      "files": ["*.config.ts", "turbo.json"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
+}

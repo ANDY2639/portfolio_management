@@ -1,0 +1,548 @@
+---
+import ThemeToggle from '../components/islands/ThemeToggle';
+import { getProfile } from '../lib/portfolio-data';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: Lang;
+  page?: string;
+}
+
+const { title, description, lang: propLang, page = 'home' } = Astro.props;
+const lang: Lang = propLang ?? getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { data: profile } = await getProfile();
+
+const siteTitle = title ?? `ag() — ${t('hero.title')}`;
+const siteDesc = description ?? t('meta.description');
+
+const navLinks = [
+  { key: 'nav.home' as const,       path: '/',           id: 'home',       cmd: './home' },
+  { key: 'nav.about' as const,      path: '/about',      id: 'about',      cmd: './about' },
+  { key: 'nav.experience' as const, path: '/experience', id: 'experience', cmd: './exp' },
+  { key: 'nav.skills' as const,     path: '/skills',     id: 'skills',     cmd: './skills' },
+  { key: 'nav.contact' as const,    path: '/contact',    id: 'contact',    cmd: './contact' },
+];
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={siteDesc} />
+  <meta name="generator" content={Astro.generator} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <title>{siteTitle}</title>
+
+  <script is:inline>
+    (function () {
+      var s = localStorage.getItem('portfolio-theme');
+      var p = s === 'light' || s === 'dark' ? s
+            : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', p);
+    })();
+  </script>
+
+  <style is:global>
+    /* ── Tokens ─────────────────────────────────────────── */
+    :root {
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+      --text-xs:   0.7rem;
+      --text-sm:   0.8rem;
+      --text-base: 0.9rem;
+      --text-lg:   1rem;
+      --text-xl:   1.1rem;
+      --text-2xl:  1.3rem;
+      --text-3xl:  1.6rem;
+      --text-4xl:  2rem;
+      --text-5xl:  2.5rem;
+      --text-6xl:  3.2rem;
+      --text-7xl:  4rem;
+
+      --sp-1: .25rem; --sp-2: .5rem;  --sp-3: .75rem;
+      --sp-4: 1rem;   --sp-5: 1.25rem;--sp-6: 1.5rem;
+      --sp-8: 2rem;   --sp-10:2.5rem; --sp-12:3rem;
+      --sp-16:4rem;   --sp-20:5rem;   --sp-24:6rem;
+      --sp-32:8rem;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur-fast:   120ms;
+      --dur-normal: 220ms;
+
+      --container: 1080px;
+      --container-px: clamp(1.25rem, 5vw, 3rem);
+    }
+
+    /* ── Dark (default — terminal) ───────────────────────── */
+    [data-theme="dark"] {
+      --bg:       #0a0a0a;
+      --bg-alt:   #0f0f0f;
+      --surface:  #111111;
+      --surface-2:#161616;
+      --border:   #1f1f1f;
+      --border-hi:#2e2e2e;
+
+      --fg:       #e8e8e8;
+      --fg-2:     #a0a0a0;
+      --fg-3:     #555555;
+      --fg-4:     #2a2a2a;
+
+      --green:    #00ff88;
+      --green-dim:#00cc6a;
+      --green-bg: rgba(0,255,136,.06);
+      --green-glow: rgba(0,255,136,.15);
+
+      --cursor:   #00ff88;
+      --nav-bg:   rgba(10,10,10,.95);
+    }
+
+    /* ── Light (inverted terminal) ───────────────────────── */
+    [data-theme="light"] {
+      --bg:       #f5f5f0;
+      --bg-alt:   #eeeeea;
+      --surface:  #ffffff;
+      --surface-2:#f0f0ec;
+      --border:   #d8d8d4;
+      --border-hi:#b8b8b4;
+
+      --fg:       #0a0a0a;
+      --fg-2:     #444444;
+      --fg-3:     #888888;
+      --fg-4:     #cccccc;
+
+      --green:    #008844;
+      --green-dim:#006633;
+      --green-bg: rgba(0,136,68,.06);
+      --green-glow: rgba(0,136,68,.12);
+
+      --cursor:   #008844;
+      --nav-bg:   rgba(245,245,240,.95);
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "calt" 1, "liga" 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      transition: background var(--dur-normal) var(--ease-out),
+                  color var(--dur-normal) var(--ease-out);
+    }
+
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font-mono); cursor: pointer; border: none; background: none; }
+    ul, ol { list-style: none; }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-mono); font-weight: 700; line-height: 1.15; color: var(--fg); }
+
+    ::selection { background: var(--green); color: #0a0a0a; }
+
+    :focus-visible {
+      outline: 1px solid var(--green);
+      outline-offset: 3px;
+    }
+
+    /* ── Scrollbar ───────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hi); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+    /* ── Helpers ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--container-px);
+    }
+
+    .section { padding-block: clamp(var(--sp-16), 8vw, var(--sp-32)); }
+
+    /* Section anatomy */
+    .section-tag {
+      font-size: var(--text-xs);
+      color: var(--fg-3);
+      letter-spacing: .1em;
+      margin-bottom: var(--sp-3);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+    .section-tag::before { content: '//'; color: var(--green); margin-right: var(--sp-1); }
+
+    .section-heading {
+      font-size: clamp(var(--text-3xl), 3.5vw, var(--text-5xl));
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: var(--sp-4);
+    }
+
+    .section-lead {
+      font-size: var(--text-base);
+      color: var(--fg-2);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    /* Line numbers decoration */
+    .line-numbers {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-top: clamp(var(--sp-16), 8vw, var(--sp-32));
+      padding-right: var(--sp-3);
+      gap: 1.6rem;
+      pointer-events: none;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .line-num {
+      font-size: var(--text-xs);
+      color: var(--fg-4);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      gap: var(--sp-6);
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--green);
+      flex-shrink: 0;
+      letter-spacing: .04em;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-logo-bracket { color: var(--fg-3); font-weight: 300; }
+    .nav-logo:hover .nav-logo-bracket { color: var(--green); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      border-left: 1px solid var(--border);
+      margin-left: var(--sp-2);
+    }
+
+    .nav-link {
+      font-size: var(--text-xs);
+      font-weight: 400;
+      color: var(--fg-3);
+      padding: var(--sp-2) var(--sp-4);
+      border-right: 1px solid var(--border);
+      letter-spacing: .04em;
+      transition: color var(--dur-fast), background var(--dur-fast);
+      position: relative;
+    }
+    .nav-link:hover { color: var(--fg); background: var(--surface); }
+    .nav-link.is-active {
+      color: var(--green);
+      background: var(--green-bg);
+    }
+    .nav-link.is-active::before {
+      content: '> ';
+      color: var(--green);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      height: 56px;
+    }
+
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      border-right: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      font-size: var(--text-xs);
+      font-weight: 400;
+      padding: 0 var(--sp-4);
+      height: 100%;
+      color: var(--fg-3);
+      letter-spacing: .08em;
+      transition: all var(--dur-fast);
+      border-right: 1px solid var(--border);
+    }
+    .lang-btn:last-child { border-right: none; }
+    .lang-btn:hover { color: var(--fg); background: var(--surface); }
+    .lang-btn.is-active { color: var(--green); background: var(--green-bg); }
+
+    /* ThemeToggle */
+    :global(.theme-toggle) { height: 100%; display: flex; align-items: center; }
+
+    :global(.theme-btn) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px; height: 100%;
+      color: var(--fg-3);
+      font-size: var(--text-sm);
+      font-family: var(--font-mono);
+      border-right: 1px solid var(--border);
+      transition: all var(--dur-fast);
+    }
+    :global(.theme-btn:hover) { color: var(--green); background: var(--green-bg); }
+
+    :global(.theme-menu) {
+      position: absolute;
+      top: calc(100% + 1px);
+      right: 0;
+      min-width: 140px;
+      background: var(--surface);
+      border: 1px solid var(--border-hi);
+      padding: 0;
+      z-index: 200;
+      animation: menuIn 120ms var(--ease-out) both;
+    }
+
+    :global(.theme-option) {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      width: 100%;
+      padding: var(--sp-3) var(--sp-4);
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      color: var(--fg-2);
+      border-bottom: 1px solid var(--border);
+      transition: all var(--dur-fast);
+      letter-spacing: .04em;
+    }
+    :global(.theme-option:last-child) { border-bottom: none; }
+    :global(.theme-option:hover) { background: var(--surface-2); color: var(--fg); }
+    :global(.theme-option.active) { color: var(--green); background: var(--green-bg); }
+    :global(.theme-option.active::before) { content: '> '; }
+
+    @keyframes menuIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 56px; height: 56px;
+      padding: 18px 16px;
+      border-left: 1px solid var(--border);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 100%; height: 1px;
+      background: var(--fg-3);
+      transition: all var(--dur-fast);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .nav-links.is-open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 56px 0 auto 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border-hi);
+        z-index: 99;
+      }
+      .nav-link {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: var(--sp-4) var(--sp-6);
+        font-size: var(--text-sm);
+      }
+    }
+
+    /* ── Main & Footer ───────────────────────────────────── */
+    main { flex: 1; padding-top: 56px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-block: var(--sp-6);
+      font-size: var(--text-xs);
+      color: var(--fg-3);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+    }
+
+    .footer-left { display: flex; align-items: center; gap: var(--sp-2); }
+    .footer-left::before { content: '# '; color: var(--green); }
+
+    .footer-nav { display: flex; align-items: center; }
+    .footer-nav a {
+      color: var(--fg-3);
+      padding: var(--sp-2) var(--sp-4);
+      border-left: 1px solid var(--border);
+      transition: color var(--dur-fast);
+      letter-spacing: .04em;
+    }
+    .footer-nav a:first-child { border-left: none; }
+    .footer-nav a:hover { color: var(--green); }
+  </style>
+</head>
+
+<body>
+  <a class="sr-only" href="#main-content">Skip to content</a>
+
+  <nav class="nav" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href={getLocalizedPath(lang, '/')} class="nav-logo">
+        <span class="nav-logo-bracket">[</span>ag<span class="nav-logo-bracket">]</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        {navLinks.map(({ key, path, id }) => (
+          <li>
+            <a
+              href={getLocalizedPath(lang, path)}
+              class={`nav-link${page === id ? ' is-active' : ''}`}
+              aria-current={page === id ? 'page' : undefined}
+            >
+              {t(key)}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="nav-controls">
+        <div class="lang-switcher" role="group" aria-label="Language">
+          <a
+            href={lang === 'es' ? Astro.url.pathname : Astro.url.pathname.replace(/^\/en/, '') || '/'}
+            class={`lang-btn${lang === 'es' ? ' is-active' : ''}`}
+            hreflang="es"
+          >es</a>
+          <a
+            href={lang === 'en' ? Astro.url.pathname : `/en${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`}
+            class={`lang-btn${lang === 'en' ? ' is-active' : ''}`}
+            hreflang="en"
+          >en</a>
+        </div>
+
+        <ThemeToggle
+          client:load
+          labelLight={t('theme.light')}
+          labelDark={t('theme.dark')}
+          labelSystem={t('theme.system')}
+        />
+
+        <button
+          class="nav-hamburger"
+          id="nav-toggle"
+          aria-controls="nav-links"
+          aria-expanded="false"
+          aria-label={t('nav.openMenu')}
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-left">
+        © {new Date().getFullYear()} andres.guerrero — {t('footer.rights')}
+      </span>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href={profile?.github ?? '#'} target="_blank" rel="noopener noreferrer">github</a>
+        <a href={profile?.linkedin ?? '#'} target="_blank" rel="noopener noreferrer">linkedin</a>
+        <a href={`mailto:${profile?.email ?? 'dev.andres.guerrero@gmail.com'}`}>email</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const btn   = document.getElementById('nav-toggle');
+    const links = document.getElementById('nav-links');
+    if (btn && links) {
+      btn.addEventListener('click', () => {
+        const open = links.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      links.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => {
+          links.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+        })
+      );
+    }
+  </script>
+</body>
+</html>

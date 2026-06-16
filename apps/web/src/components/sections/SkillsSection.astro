@@ -1,0 +1,173 @@
+---
+import SkillsFilter from '../islands/SkillsFilter';
+import type { Skill } from '../../lib/types';
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  skills: Skill[];
+  error: string | null;
+  lang: Lang;
+  certCountBySkill?: Record<string, number>;
+}
+
+const { skills, error, lang, certCountBySkill = {} } = Astro.props;
+const t = useTranslations(lang);
+
+const categoryLabels: Record<string, string> = {
+  all:      t('skills.filter.all'),
+  frontend: t('skills.filter.frontend'),
+  backend:  t('skills.filter.backend'),
+  tools:    t('skills.filter.tools'),
+  soft:     t('skills.filter.soft'),
+};
+
+const levelLabels: Record<number, string> = {
+  1: t('skills.level.1'),
+  2: t('skills.level.2'),
+  3: t('skills.level.3'),
+  4: t('skills.level.4'),
+  5: t('skills.level.5'),
+};
+---
+
+<section class="section skills-section" id="skills" aria-labelledby="skills-title">
+  <div class="container">
+    <p class="section-tag">skills.json</p>
+    <h2 class="section-heading" id="skills-title">{t('skills.title')}</h2>
+    <p class="section-lead">{t('skills.subtitle')}</p>
+
+    {error && <p class="state-err" role="alert">// error: {t('skills.error')}</p>}
+    {!error && skills.length === 0 && <p class="state-empty">// {t('skills.empty')}</p>}
+    {!error && skills.length > 0 && (
+      <SkillsFilter
+        client:visible
+        skills={skills}
+        categoryLabels={categoryLabels}
+        levelLabels={levelLabels}
+        certCountBySkill={certCountBySkill}
+      />
+    )}
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
+
+  /* SkillsFilter island */
+  :global(.sf-filters) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: var(--sp-8);
+    margin-bottom: 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    width: fit-content;
+  }
+
+  :global(.sf-filter-btn) {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    padding: var(--sp-2) var(--sp-5);
+    border: none;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    color: var(--fg-3);
+    background: var(--surface);
+    cursor: pointer;
+    letter-spacing: .04em;
+    transition: all var(--dur-fast);
+  }
+  :global(.sf-filter-btn:last-child) { border-right: none; }
+  :global(.sf-filter-btn:hover) { color: var(--fg); background: var(--surface-2); }
+  :global(.sf-filter-btn.is-active) {
+    color: var(--green);
+    background: var(--green-bg);
+    border-bottom-color: var(--green-bg);
+  }
+  :global(.sf-filter-btn.is-active::before) { content: '> '; }
+
+  :global(.sf-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    border: 1px solid var(--border);
+    margin-top: 0;
+  }
+
+  :global(.sf-card) {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    transition: background var(--dur-fast);
+  }
+  :global(.sf-card:hover) { background: var(--surface-2); }
+  :global(.sf-card.is-highlight) { background: var(--green-bg); }
+  :global(.sf-card.is-highlight:hover) { background: rgba(0,255,136,.1); }
+
+  :global(.sf-card-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+  }
+
+  :global(.sf-card-name) {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  :global(.sf-card-badge) {
+    font-size: 10px;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  :global(.sf-cert-count) {
+    font-size: 10px;
+    color: var(--fg-3);
+    border: 1px solid var(--border);
+    padding: 1px var(--sp-2);
+    letter-spacing: .04em;
+    flex-shrink: 0;
+  }
+  :global(.sf-card.is-highlight .sf-cert-count) {
+    border-color: rgba(0,255,136,.3);
+  }
+
+  :global(.sf-card-level) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+  }
+
+  :global(.sf-level-bar) {
+    display: flex;
+    gap: 3px;
+  }
+
+  :global(.sf-level-dot) {
+    flex: 1;
+    height: 2px;
+    background: var(--border-hi);
+    transition: background 300ms;
+  }
+  :global(.sf-level-dot.filled) { background: var(--green); }
+
+  :global(.sf-level-label) {
+    font-size: 10px;
+    color: var(--fg-3);
+    letter-spacing: .04em;
+  }
+</style>

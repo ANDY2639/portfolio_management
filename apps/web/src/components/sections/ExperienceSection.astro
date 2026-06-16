@@ -1,0 +1,244 @@
+---
+import type { Experience } from '../../lib/types';
+import { useTranslations, formatDate } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  experience: Experience[];
+  error: string | null;
+  lang: Lang;
+}
+
+const { experience, error, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section exp-section" id="experience" aria-labelledby="experience-title">
+  <div class="container">
+    <p class="section-tag">experience.ts</p>
+    <h2 class="section-heading" id="experience-title">{t('experience.title')}</h2>
+    <p class="section-lead">{t('experience.subtitle')}</p>
+
+    {error && <p class="state-err" role="alert">// error: {t('experience.error')}</p>}
+    {!error && experience.length === 0 && <p class="state-empty">// {t('experience.empty')}</p>}
+
+    {!error && experience.length > 0 && (
+      <div class="exp-list">
+        {experience.map((item, idx) => {
+          const start = formatDate(item.startDate, lang);
+          const end   = item.isCurrent ? t('experience.present') : formatDate(item.endDate, lang);
+          return (
+            <article class="exp-item" style={`--idx:${idx}`} aria-label={`${item.role} at ${item.company}`}>
+              <!-- Header row -->
+              <div class="exp-header">
+                <div class="exp-header-left">
+                  <span class="exp-idx" aria-hidden="true">{String(idx + 1).padStart(2,'0')}</span>
+                  <div class="exp-titles">
+                    <h3 class="exp-role">{item.role}</h3>
+                    <p class="exp-company">{item.company}</p>
+                  </div>
+                </div>
+                <div class="exp-header-right">
+                  {item.isCurrent && <span class="exp-badge">● active</span>}
+                  <time class="exp-dates">{start} → {end}</time>
+                  {item.location && <span class="exp-loc">{item.location}</span>}
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="exp-body">
+                <p class="exp-summary">{item.summary}</p>
+
+                {item.achievements.length > 0 && (
+                  <div class="exp-achievements">
+                    <p class="exp-label">// {t('experience.achievements')}</p>
+                    <ul>
+                      {item.achievements.map((a: string) => (
+                        <li><span class="ach-prompt" aria-hidden="true">+</span>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {item.technologies.length > 0 && (
+                  <div class="exp-tech">
+                    <ul>
+                      {item.technologies.map((tech: string) => (
+                        <li>{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .exp-section {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
+
+  .exp-list {
+    margin-top: var(--sp-10);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .exp-item {
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 400ms var(--ease-out) both;
+    animation-delay: calc(var(--idx, 0) * 60ms);
+  }
+  .exp-item:last-child { border-bottom: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .exp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-6);
+    padding: var(--sp-5) var(--sp-6);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+    flex-wrap: wrap;
+  }
+
+  .exp-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .exp-idx {
+    font-size: var(--text-xs);
+    color: var(--fg-4);
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 24px;
+    user-select: none;
+  }
+
+  .exp-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .exp-role {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .exp-company {
+    font-size: var(--text-sm);
+    color: var(--green);
+    font-weight: 400;
+  }
+
+  .exp-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+
+  .exp-badge {
+    font-size: var(--text-xs);
+    color: var(--green);
+    letter-spacing: .04em;
+  }
+
+  .exp-dates {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    white-space: nowrap;
+  }
+
+  .exp-loc {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+  }
+
+  .exp-body {
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+
+  .exp-summary {
+    font-size: var(--text-base);
+    color: var(--fg-2);
+    line-height: 1.85;
+    border-left: 2px solid var(--border);
+    padding-left: var(--sp-4);
+  }
+
+  .exp-label {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    font-style: italic;
+    margin-bottom: var(--sp-3);
+  }
+
+  .exp-achievements ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    list-style: none;
+  }
+
+  .exp-achievements li {
+    font-size: var(--text-sm);
+    color: var(--fg-2);
+    display: flex;
+    gap: var(--sp-3);
+    line-height: 1.7;
+  }
+
+  .ach-prompt {
+    color: var(--green);
+    flex-shrink: 0;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .exp-tech ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    list-style: none;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+
+  .exp-tech li {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    padding: var(--sp-1) var(--sp-3);
+    border-right: 1px solid var(--border);
+    letter-spacing: .04em;
+    transition: color var(--dur-fast);
+  }
+  .exp-tech li:last-child { border-right: none; }
+  .exp-tech li:hover { color: var(--green); }
+
+  @media (max-width: 640px) {
+    .exp-header { flex-direction: column; align-items: flex-start; }
+    .exp-header-right { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+  }
+</style>

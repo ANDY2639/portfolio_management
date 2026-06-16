@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getProfile } from '../lib/portfolio-data';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+const lang: Lang = 'es';
+const t = useTranslations(lang);
+
+const { data: p } = await getProfile();
+---
+
+<Layout title={`contact() — Andrés Guerrero`} description={t('meta.contact.description')} lang={lang} page="contact">
+  <section class="section page-hero" aria-labelledby="contact-page-title">
+    <div class="container">
+      <p class="section-tag">contact.ts</p>
+      <h1 class="section-heading" id="contact-page-title">{t('contact.title')}</h1>
+    </div>
+  </section>
+
+  <section class="section contact-body" aria-label="Contact information">
+    <div class="container contact-grid">
+      <div class="contact-intro">
+        <p class="intro-lead">{t('contact.subtitle')}</p>
+        <div class="intro-note">
+          <span class="note-prompt" aria-hidden="true">// </span>
+          {t('contact.cta')}
+        </div>
+      </div>
+
+      <div class="contact-cmds">
+        <p class="cmds-header">$ available channels</p>
+        <div class="cmd-list">
+          <a href={`mailto:${p?.email ?? 'dev.andres.guerrero@gmail.com'}`} class="cmd-row">
+            <span class="cmd-num">01</span>
+            <span class="cmd-label">email</span>
+            <span class="cmd-value">{p?.email ?? 'dev.andres.guerrero@gmail.com'}</span>
+            <span class="cmd-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href={p?.linkedin ?? '#'} target="_blank" rel="noopener noreferrer" class="cmd-row">
+            <span class="cmd-num">02</span>
+            <span class="cmd-label">linkedin</span>
+            <span class="cmd-value">{(p?.linkedin ?? '').replace('https://', '')}</span>
+            <span class="cmd-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href={p?.github ?? '#'} target="_blank" rel="noopener noreferrer" class="cmd-row">
+            <span class="cmd-num">03</span>
+            <span class="cmd-label">github</span>
+            <span class="cmd-value">{(p?.github ?? '').replace('https://', '')}</span>
+            <span class="cmd-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
+  .contact-body { background: var(--bg); border-bottom: 1px solid var(--border); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-16);
+    align-items: start;
+  }
+
+  .contact-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    border-left: 2px solid var(--border);
+    padding-left: var(--sp-6);
+  }
+
+  .intro-lead {
+    font-size: var(--text-lg);
+    color: var(--fg-2);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .intro-note {
+    font-size: var(--text-sm);
+    color: var(--fg-3);
+    font-style: italic;
+    padding: var(--sp-4) var(--sp-5);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    line-height: 1.75;
+  }
+
+  .note-prompt { color: var(--green); font-style: normal; }
+
+  .contact-cmds {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .cmds-header {
+    font-size: var(--text-xs);
+    color: var(--green);
+    padding: var(--sp-3) var(--sp-5);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+    letter-spacing: .04em;
+  }
+
+  .cmd-list { display: flex; flex-direction: column; }
+
+  .cmd-row {
+    display: grid;
+    grid-template-columns: 32px 80px 1fr auto;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-5) var(--sp-5);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--dur-fast);
+  }
+  .cmd-row:last-child { border-bottom: none; }
+  .cmd-row:hover { background: var(--surface-2); }
+  .cmd-row:hover .cmd-value { color: var(--green); }
+  .cmd-row:hover .cmd-arrow { color: var(--green); transform: translateX(4px); }
+
+  .cmd-num   { font-size: var(--text-xs); color: var(--fg-4); user-select: none; }
+  .cmd-label { font-size: var(--text-sm); color: var(--fg-2); font-weight: 500; }
+  .cmd-value { font-size: var(--text-xs); color: var(--fg-3); transition: color var(--dur-fast); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cmd-arrow { font-size: var(--text-sm); color: var(--fg-3); transition: color var(--dur-fast), transform var(--dur-fast); flex-shrink: 0; }
+
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .cmd-row { grid-template-columns: 32px 1fr auto; }
+    .cmd-label { display: none; }
+  }
+</style>

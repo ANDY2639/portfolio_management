@@ -1,0 +1,196 @@
+---
+import type { Project } from '../../lib/types';
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  projects: Project[];
+  error: string | null;
+  lang: Lang;
+}
+
+const { projects, error, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="section proj-section" id="projects" aria-labelledby="proj-title">
+  <div class="container">
+    <p class="section-tag">projects.ts</p>
+    <h2 class="section-heading" id="proj-title">{t('projects.title')}</h2>
+    <p class="section-lead">{t('projects.subtitle')}</p>
+
+    {error && <p class="state-err" role="alert">// error: {t('projects.error')}</p>}
+    {!error && projects.length === 0 && <p class="state-empty">// {t('projects.empty')}</p>}
+
+    {!error && projects.length > 0 && (
+      <ul class="proj-grid">
+        {projects.map((item, idx) => (
+          <li class="proj-card" style={`--idx:${idx}`}>
+            <div class="proj-card-header">
+              <span class="proj-idx" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+              <h3 class="proj-name">{item.name}</h3>
+            </div>
+
+            {item.description && (
+              <p class="proj-desc">{item.description}</p>
+            )}
+
+            {item.tags.length > 0 && (
+              <ul class="proj-tags" aria-label="Tags">
+                {item.tags.map((tag) => (
+                  <li class="proj-tag">{tag}</li>
+                ))}
+              </ul>
+            )}
+
+            <div class="proj-links">
+              {item.repoUrl && (
+                <a
+                  href={item.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="proj-link"
+                >
+                  <span aria-hidden="true">&gt;&nbsp;</span>{t('projects.repo')}
+                </a>
+              )}
+              {item.demoUrl && (
+                <a
+                  href={item.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="proj-link proj-link--demo"
+                >
+                  <span aria-hidden="true">&gt;&nbsp;</span>{t('projects.demo')}
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+
+<style>
+  .proj-section {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
+
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0;
+    margin-top: var(--sp-10);
+    border: 1px solid var(--border);
+    list-style: none;
+  }
+
+  .proj-card {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    animation: fadeIn 400ms var(--ease-out) both;
+    animation-delay: calc(var(--idx, 0) * 60ms);
+    transition: background var(--dur-fast);
+  }
+  .proj-card:hover { background: var(--surface-2); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .proj-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+  }
+
+  .proj-idx {
+    font-size: var(--text-xs);
+    color: var(--fg-4);
+    font-weight: 700;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .proj-name {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.3;
+  }
+
+  .proj-desc {
+    font-size: var(--text-sm);
+    color: var(--fg-2);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  .proj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+  }
+
+  .proj-tag {
+    font-size: 10px;
+    color: var(--fg-3);
+    border: 1px solid var(--border);
+    padding: 2px var(--sp-2);
+    letter-spacing: .04em;
+    transition: color var(--dur-fast), border-color var(--dur-fast);
+  }
+  .proj-card:hover .proj-tag {
+    color: var(--fg-2);
+    border-color: var(--border-hi);
+  }
+
+  .proj-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-top: auto;
+    padding-top: var(--sp-2);
+    border-top: 1px solid var(--border);
+  }
+
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 2px var(--sp-3);
+    transition: background var(--dur-fast), color var(--dur-fast);
+  }
+  .proj-link:hover {
+    background: var(--green);
+    color: #0a0a0a;
+  }
+
+  .proj-link--demo {
+    color: var(--fg-2);
+    border-color: var(--border-hi);
+  }
+  .proj-link--demo:hover {
+    background: var(--fg-2);
+    color: #0a0a0a;
+  }
+
+  @media (max-width: 640px) {
+    .proj-grid { grid-template-columns: 1fr; }
+    .proj-card { border-right: none; }
+  }
+</style>

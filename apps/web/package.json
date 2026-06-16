@@ -1,0 +1,36 @@
+{
+  "name": "@portfolio/web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "oxlint src",
+    "lint:fix": "oxlint src --fix",
+    "format": "oxfmt src --check",
+    "format:write": "oxfmt src --write",
+    "types:check": "astro check",
+    "astro": "astro",
+    "clean:build": "pnpm dlx rimraf .astro",
+    "clean:nm": "pnpm dlx rimraf node_modules",
+    "clean": "pnpm clean:build && pnpm clean:nm"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^5.1.2",
+    "@portfolio/contracts": "workspace:*",
+    "@supabase/supabase-js": "^2.105.1",
+    "astro": "^6.2.1",
+    "preact": "^10.29.1"
+  },
+  "devDependencies": {
+    "oxlint": "^1.55.0",
+    "oxfmt": "^0.40.0",
+    "@astrojs/check": "^0.9.9",
+    "typescript": "~5.9.3"
+  }
+}
