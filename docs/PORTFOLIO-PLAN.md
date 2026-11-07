@@ -326,9 +326,16 @@ Actualizaciones: Dependabot/Renovate semanal, release-please, migraciones expand
 - [x] SQL legacy archivado en `docs/archive/supabase/`
 - [x] `apps/api` fuera del workspace; contracts quitado de web/admin
 - [x] `.nvmrc` 24, `turbo` pinchado, `.gitignore` endurecido, rama `main`
-- [ ] `pnpm install` + `pnpm build` verde
-- [ ] Repo `portfolio_management` público + branch protection
-- [ ] Cero secretos en el historial
+- [x] `pnpm install` + `pnpm build` verde (10 páginas)
+- [x] Repo `portfolio_management` público + branch protection
+- [x] Cero secretos en el historial
+
+### Notas de la Fase 0
+
+- `pnpm build`: verde. La web compila y genera 10 páginas; el contenido sigue vacío porque aún lee Supabase (se corrige en Fase 1).
+- `pnpm types:check`: 0 errores.
+- `pnpm lint`: 9 errores preexistentes en `apps/web` (TypeScript/React) que se corrigen en Fase 2. Se añadió `oxlint-tsgolint` y se corrigieron dos reglas inválidas de la config.
+- Se eliminó el override global de `zod` (forzaba Zod 3 y rompía Astro 6, que requiere Zod 4).
 
 ---
 
