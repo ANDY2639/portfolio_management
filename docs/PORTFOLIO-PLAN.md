@@ -321,7 +321,7 @@ Actualizaciones: Dependabot/Renovate semanal, release-please, migraciones expand
 - [x] Neon: CLI, login, MCP y 7 skills
 - [x] Proyecto Neon `portfolio` creado
 - [x] Legacy commiteado y respaldado
-- [ ] Repos viejos de GitHub eliminados (con backup)
+- [x] Repos viejos de GitHub eliminados (con backup)
 - [x] `DATABASE_URL` y `DATABASE_URL_UNPOOLED` en `apps/web/.env.local`
 - [x] SQL legacy archivado en `docs/archive/supabase/`
 - [x] `apps/api` fuera del workspace; contracts quitado de web/admin
