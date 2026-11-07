@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@astrojs/preact": "^5.1.2",
-    "@portfolio/contracts": "workspace:*",
     "@supabase/supabase-js": "^2.105.1",
     "astro": "^6.2.1",
     "preact": "^10.29.1"

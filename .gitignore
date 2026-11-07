@@ -13,9 +13,8 @@ out
 .turbo
 
 # Environment
-.env
-.env.local
-.env.*.local
+.env*
+!.env.example
 
 # Prisma
 prisma/migrations/dev.db
@@ -34,3 +33,6 @@ Thumbs.db
 # AI Providers
 .claude
 .opencode
+.agents
+skills-lock.json
+.neon

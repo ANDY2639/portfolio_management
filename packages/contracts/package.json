@@ -23,7 +23,7 @@
     "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/fixup-cjs.js",
     "test": "node --test tests/**/*.test.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint src --ext .ts",
+    "lint": "oxlint src",
     "clean:build": "pnpm dlx rimraf dist",
     "clean:nm": "pnpm dlx rimraf node_modules",
     "clean": "pnpm clean:build && pnpm clean:nm"
