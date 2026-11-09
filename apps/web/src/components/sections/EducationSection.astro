@@ -1,10 +1,10 @@
 ---
-import type { Education } from '../../lib/types';
+import type { EducationContent } from '@portfolio/data';
 import { useTranslations, formatDate } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
-  education: Education[];
+  education: EducationContent[];
   error: string | null;
   lang: Lang;
 }
@@ -40,16 +40,6 @@ const t = useTranslations(lang);
               <div class="edu-right">
                 <time class="edu-dates">{start}{end ? ` → ${end}` : ''}</time>
                 {item.description && <p class="edu-desc">{item.description}</p>}
-                {item.certificationsUrl && (
-                  <a
-                    href={item.certificationsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="edu-cert-link"
-                  >
-                    <span aria-hidden="true">&gt;&nbsp;</span>{t('education.certifications')}
-                  </a>
-                )}
               </div>
             </article>
           );

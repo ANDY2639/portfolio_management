@@ -1,22 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SkillsSection from '../components/sections/SkillsSection.astro';
-import { getCertifications, getSkills } from '../lib/portfolio-data';
+import { getSiteContent } from '@portfolio/data';
 import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 const lang: Lang = 'es';
 const t = useTranslations(lang);
 
-const [skillsResult, certsResult] = await Promise.all([getSkills(), getCertifications()]);
+const content = await getSiteContent(lang);
+const { skillGroups, certifications } = content;
 
 const certCountBySkill: Record<string, number> = {};
-for (const cert of certsResult.data) {
+for (const cert of certifications) {
   for (const kw of cert.keywords) {
     const kwLower = kw.trim().toLowerCase();
-    for (const skill of skillsResult.data) {
-      if (skill.name.trim().toLowerCase() === kwLower) {
-        certCountBySkill[skill.name] = (certCountBySkill[skill.name] ?? 0) + 1;
+    for (const group of skillGroups) {
+      for (const skill of group.skills) {
+        if (skill.name.trim().toLowerCase() === kwLower) {
+          certCountBySkill[skill.name] = (certCountBySkill[skill.name] ?? 0) + 1;
+        }
       }
     }
   }
@@ -31,7 +34,7 @@ for (const cert of certsResult.data) {
       <p class="section-lead">{t('skills.subtitle')}</p>
     </div>
   </section>
-  <SkillsSection skills={skillsResult.data} error={skillsResult.error} lang={lang} certCountBySkill={certCountBySkill} />
+  <SkillsSection groups={skillGroups} lang={lang} certCountBySkill={certCountBySkill} />
 </Layout>
 
 <style>

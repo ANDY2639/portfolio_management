@@ -47,29 +47,33 @@ export default function ThemeToggle({ labelLight = 'light', labelDark = 'dark', 
   return (
     <div class="theme-toggle">
       <button
+        type="button"
         class="theme-btn"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
+        aria-label="theme"
         title="theme"
       >
-        {icon[theme]}
+        <span aria-hidden="true">{icon[theme]}</span>
       </button>
 
       {open && (
-        <ul class="theme-menu" role="listbox">
+        <div class="theme-menu" role="menu" aria-label="theme">
           {(['dark', 'light', 'system'] as Theme[]).map((t) => (
-            <li key={t} role="option" aria-selected={theme === t}>
-              <button
-                class={`theme-option${theme === t ? ' active' : ''}`}
-                onClick={() => select(t)}
-              >
-                <span>{icon[t]}</span>
-                <span>{labels[t]}</span>
-              </button>
-            </li>
+            <button
+              key={t}
+              type="button"
+              role="menuitemradio"
+              aria-checked={theme === t}
+              class={`theme-option${theme === t ? ' active' : ''}`}
+              onClick={() => select(t)}
+            >
+              <span aria-hidden="true">{icon[t]}</span>
+              <span>{labels[t]}</span>
+            </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

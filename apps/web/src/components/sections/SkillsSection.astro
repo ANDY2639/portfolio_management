@@ -1,34 +1,18 @@
 ---
 import SkillsFilter from '../islands/SkillsFilter';
-import type { Skill } from '../../lib/types';
+import type { SkillGroupContent } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
-  skills: Skill[];
-  error: string | null;
+  groups: SkillGroupContent[];
   lang: Lang;
   certCountBySkill?: Record<string, number>;
 }
 
-const { skills, error, lang, certCountBySkill = {} } = Astro.props;
+const { groups, lang, certCountBySkill = {} } = Astro.props;
 const t = useTranslations(lang);
-
-const categoryLabels: Record<string, string> = {
-  all:      t('skills.filter.all'),
-  frontend: t('skills.filter.frontend'),
-  backend:  t('skills.filter.backend'),
-  tools:    t('skills.filter.tools'),
-  soft:     t('skills.filter.soft'),
-};
-
-const levelLabels: Record<number, string> = {
-  1: t('skills.level.1'),
-  2: t('skills.level.2'),
-  3: t('skills.level.3'),
-  4: t('skills.level.4'),
-  5: t('skills.level.5'),
-};
+const totalSkills = groups.reduce((total, group) => total + group.skills.length, 0);
 ---
 
 <section class="section skills-section" id="skills" aria-labelledby="skills-title">
@@ -37,14 +21,12 @@ const levelLabels: Record<number, string> = {
     <h2 class="section-heading" id="skills-title">{t('skills.title')}</h2>
     <p class="section-lead">{t('skills.subtitle')}</p>
 
-    {error && <p class="state-err" role="alert">// error: {t('skills.error')}</p>}
-    {!error && skills.length === 0 && <p class="state-empty">// {t('skills.empty')}</p>}
-    {!error && skills.length > 0 && (
+    {totalSkills === 0 && <p class="state-empty">// {t('skills.empty')}</p>}
+    {totalSkills > 0 && (
       <SkillsFilter
         client:visible
-        skills={skills}
-        categoryLabels={categoryLabels}
-        levelLabels={levelLabels}
+        groups={groups}
+        allLabel={t('skills.filter.all')}
         certCountBySkill={certCountBySkill}
       />
     )}
@@ -169,5 +151,17 @@ const levelLabels: Record<number, string> = {
     font-size: 10px;
     color: var(--fg-3);
     letter-spacing: .04em;
+  }
+  :global(.sf-group) {
+    margin-top: var(--sp-6);
+  }
+
+  :global(.sf-group-title) {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: var(--sp-3);
   }
 </style>

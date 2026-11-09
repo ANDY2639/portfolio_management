@@ -2,17 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import ExperienceSection from '../components/sections/ExperienceSection.astro';
 import EducationSection from '../components/sections/EducationSection.astro';
-import { getExperience, getEducation } from '../lib/portfolio-data';
+import { getSiteContent } from '@portfolio/data';
 import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 const lang: Lang = 'es';
 const t = useTranslations(lang);
 
-const [experienceResult, educationResult] = await Promise.all([
-  getExperience(),
-  getEducation(),
-]);
+const content = await getSiteContent(lang);
 ---
 
 <Layout title={`experience() — Andrés Guerrero`} description={t('meta.experience.description')} lang={lang} page="experience">
@@ -23,8 +20,8 @@ const [experienceResult, educationResult] = await Promise.all([
       <p class="section-lead">{t('experience.subtitle')}</p>
     </div>
   </section>
-  <ExperienceSection experience={experienceResult.data} error={experienceResult.error} lang={lang} />
-  <EducationSection education={educationResult.data} error={educationResult.error} lang={lang} />
+  <ExperienceSection experience={content.experience} error={null} lang={lang} />
+  <EducationSection education={content.education} error={null} lang={lang} />
 </Layout>
 
 <style>

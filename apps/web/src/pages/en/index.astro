@@ -5,31 +5,26 @@ import CertificationsSection from '../../components/sections/CertificationsSecti
 import ProjectsSection from '../../components/sections/ProjectsSection.astro';
 import ExperienceSection from '../../components/sections/ExperienceSection.astro';
 import EducationSection from '../../components/sections/EducationSection.astro';
-import { getCertifications, getEducation, getExperience, getProfile, getProjects, getSkills } from '../../lib/portfolio-data';
+import { getSiteContent } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 const lang: Lang = 'en';
 const t = useTranslations(lang);
 
-const [profileResult, skillsResult, experienceResult, educationResult, certsResult, projectsResult] = await Promise.all([
-  getProfile(),
-  getSkills(),
-  getExperience(),
-  getEducation(),
-  getCertifications(),
-  getProjects(),
-]);
-
-const p = profileResult.data;
+const content = await getSiteContent(lang);
+const p = content.profile;
+const { skillGroups, experience, education, certifications, projects } = content;
 
 const certCountBySkill: Record<string, number> = {};
-for (const cert of certsResult.data) {
+for (const cert of certifications) {
   for (const kw of cert.keywords) {
     const kwLower = kw.trim().toLowerCase();
-    for (const skill of skillsResult.data) {
-      if (skill.name.trim().toLowerCase() === kwLower) {
-        certCountBySkill[skill.name] = (certCountBySkill[skill.name] ?? 0) + 1;
+    for (const group of skillGroups) {
+      for (const skill of group.skills) {
+        if (skill.name.trim().toLowerCase() === kwLower) {
+          certCountBySkill[skill.name] = (certCountBySkill[skill.name] ?? 0) + 1;
+        }
       }
     }
   }
@@ -111,9 +106,9 @@ for (const cert of certsResult.data) {
       <h2 class="section-heading" id="about-title">{t('about.title')}</h2>
       <div class="about-grid">
         <div class="about-text">
-          <p class="about-p">{p?.bioEn.p1 ?? t('about.p1')}</p>
-          <p class="about-p">{p?.bioEn.p2 ?? t('about.p2')}</p>
-          <p class="about-p about-p-dim">{p?.bioEn.p3 ?? t('about.p3')}</p>
+          <p class="about-p">{p?.bioP1 ?? t('about.p1')}</p>
+          <p class="about-p">{p?.bioP2 ?? t('about.p2')}</p>
+          <p class="about-p about-p-dim">{p?.bioP3 ?? t('about.p3')}</p>
         </div>
         <ul class="about-props">
           <li class="prop"><span class="prop-key">architecture</span><span class="prop-sep">:</span><span class="prop-val">{t('about.card.architecture.desc')}</span></li>
@@ -126,11 +121,11 @@ for (const cert of certsResult.data) {
     </div>
   </section>
 
-  <SkillsSection skills={skillsResult.data} error={skillsResult.error} lang={lang} certCountBySkill={certCountBySkill} />
-  <ExperienceSection experience={experienceResult.data} error={experienceResult.error} lang={lang} />
-  <EducationSection education={educationResult.data} error={educationResult.error} lang={lang} />
-  <CertificationsSection certifications={certsResult.data} error={certsResult.error} lang={lang} />
-  <ProjectsSection projects={projectsResult.data} error={projectsResult.error} lang={lang} />
+  <SkillsSection groups={skillGroups} lang={lang} certCountBySkill={certCountBySkill} />
+  <ExperienceSection experience={experience} error={null} lang={lang} />
+  <EducationSection education={education} error={null} lang={lang} />
+  <CertificationsSection certifications={certifications} error={null} lang={lang} />
+  {projects.length > 0 && <ProjectsSection projects={projects} error={null} lang={lang} />}
 
   <section class="section contact-section" id="contact" aria-labelledby="contact-title">
     <div class="container">

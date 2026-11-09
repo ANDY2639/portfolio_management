@@ -1,10 +1,10 @@
 ---
-import type { Project } from '../../lib/types';
+import type { ProjectContent } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
-  projects: Project[];
+  projects: ProjectContent[];
   error: string | null;
   lang: Lang;
 }

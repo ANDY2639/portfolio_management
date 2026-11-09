@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getProfile } from '../lib/portfolio-data';
+import { getProfile } from '@portfolio/data';
 import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 const lang: Lang = 'es';
 const t = useTranslations(lang);
 
-const { data: p } = await getProfile();
+const p = await getProfile(lang);
 ---
 
 <Layout title={`about() — Andrés Guerrero`} description={t('meta.about.description')} lang={lang} page="about">
@@ -21,9 +21,9 @@ const { data: p } = await getProfile();
   <section class="section about-body" aria-label="About content">
     <div class="container about-grid">
       <div class="about-text">
-        <p class="about-lead">{p?.bioEs.p1 ?? t('about.p1')}</p>
-        <p class="about-p">{p?.bioEs.p2 ?? t('about.p2')}</p>
-        <p class="about-p about-p-dim">{p?.bioEs.p3 ?? t('about.p3')}</p>
+        <p class="about-lead">{p?.bioP1 ?? t('about.p1')}</p>
+        <p class="about-p">{p?.bioP2 ?? t('about.p2')}</p>
+        <p class="about-p about-p-dim">{p?.bioP3 ?? t('about.p3')}</p>
       </div>
 
       <aside class="about-sidebar">

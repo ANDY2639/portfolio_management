@@ -1,10 +1,10 @@
 ---
-import type { Experience } from '../../lib/types';
+import type { ExperienceContent } from '@portfolio/data';
 import { useTranslations, formatDate } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
-  experience: Experience[];
+  experience: ExperienceContent[];
   error: string | null;
   lang: Lang;
 }

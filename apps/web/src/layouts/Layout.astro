@@ -1,6 +1,6 @@
 ---
 import ThemeToggle from '../components/islands/ThemeToggle';
-import { getProfile } from '../lib/portfolio-data';
+import { getProfile } from '@portfolio/data';
 import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
@@ -15,7 +15,7 @@ const { title, description, lang: propLang, page = 'home' } = Astro.props;
 const lang: Lang = propLang ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const { data: profile } = await getProfile();
+const profile = await getProfile(lang);
 
 const siteTitle = title ?? `ag() — ${t('hero.title')}`;
 const siteDesc = description ?? t('meta.description');

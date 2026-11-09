@@ -1,0 +1,782 @@
+{
+  "profile": {
+    "fullName": "Andres Felipe Guerrero Novoa",
+    "displayName": "Andrés Guerrero",
+    "terminalUser": "andres_guerrero",
+    "email": "dev.andres.guerrero@gmail.com",
+    "phone": "+57 3128985780",
+    "location": "Cartagena, Colombia",
+    "github": "https://github.com/DevAndresGuerrero",
+    "linkedin": "https://linkedin.com/in/andres-felipe-guerrero-novoa-40b70a203",
+    "cvUrl": null,
+    "availabilityOpen": true,
+    "translations": {
+      "es": {
+        "title": "Full Stack Developer",
+        "bioP1": "Full Stack Developer con más de 7 años de experiencia construyendo productos digitales end-to-end para entornos B2A, B2C y B2E. Enfocado en diseñar soluciones escalables, arquitectura de microservicios e integraciones con servicios en la nube.",
+        "bioP2": "Aplico herramientas de IA y diseño flujos agénticos para optimizar procesos de implementación, integración y entrega continua de valor.",
+        "bioP3": "Cuando no estoy programando, estoy explorando nuevas herramientas de IA, contribuyendo a proyectos open source o tomando café mientras debuggeo algo que \"debería funcionar\"."
+      },
+      "en": {
+        "title": "Full Stack Developer",
+        "bioP1": "Full Stack Developer with 7+ years of experience building end-to-end digital products for B2A, B2C and B2E environments. Focused on scalable solutions, microservices architecture and cloud integrations.",
+        "bioP2": "I apply AI tools and design agentic workflows to optimize implementation, integration and continuous value delivery processes.",
+        "bioP3": "When I'm not coding, I'm exploring new AI tools, contributing to OSS, or debugging something that \"should work\" over a coffee."
+      }
+    }
+  },
+  "skillGroups": [
+    {
+      "key": "languages",
+      "translations": {
+        "es": "Lenguajes",
+        "en": "Languages"
+      },
+      "skills": [
+        "TypeScript",
+        "JavaScript",
+        "C#",
+        "PHP",
+        "Python",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "key": "frameworks",
+      "translations": {
+        "es": "Frameworks",
+        "en": "Frameworks"
+      },
+      "skills": [
+        "NestJS",
+        "Node.js",
+        "Express",
+        ".NET Core",
+        "Vue.js",
+        "React",
+        "Next.js",
+        "Redux",
+        "Zustand",
+        "TanStack Query",
+        "ASP.NET",
+        "Laravel",
+        "jQuery",
+        "Bootstrap",
+        "Tailwind CSS",
+        "HeroUI",
+        "DaisyUI"
+      ]
+    },
+    {
+      "key": "databases",
+      "translations": {
+        "es": "Bases de Datos",
+        "en": "Databases"
+      },
+      "skills": [
+        "PostgreSQL",
+        "Prisma ORM",
+        "SQL Server",
+        "MySQL",
+        "MariaDB",
+        "MongoDB"
+      ]
+    },
+    {
+      "key": "testing",
+      "translations": {
+        "es": "Pruebas",
+        "en": "Testing"
+      },
+      "skills": [
+        "Jest",
+        "Vitest"
+      ]
+    },
+    {
+      "key": "devops",
+      "translations": {
+        "es": "DevOps y Herramientas",
+        "en": "DevOps & Tools"
+      },
+      "skills": [
+        "Arquitectura Hexagonal",
+        "Microservicios",
+        "REST APIs",
+        "GraphQL",
+        "GCP",
+        "Azure DevOps",
+        "Azure Cloud",
+        "Docker",
+        "Linux (Ubuntu)",
+        "Git",
+        "CI/CD",
+        "JWT",
+        "Websockets",
+        "Clean Code"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "key": "idea-latente-sas-desarrollador-full-stack",
+      "company": "Idea Latente SAS",
+      "location": "Cali",
+      "isRemote": true,
+      "startDate": "2023-05-01",
+      "endDate": "2026-09-01",
+      "isCurrent": false,
+      "technologies": [
+        "Node.js",
+        "NestJS",
+        "Express",
+        ".NET Core",
+        "C#",
+        "TypeScript",
+        "Microservicios",
+        "Arquitectura Hexagonal",
+        "REST APIs",
+        "Clean Code",
+        "React",
+        "Next.js (SSR/SSG)",
+        "Vue.js",
+        "Tailwind CSS",
+        "Redux",
+        "Zustand",
+        "TanStack Query",
+        "Jest",
+        "Vitest",
+        "PostgreSQL",
+        "Prisma ORM",
+        "SQL Server",
+        "MySQL",
+        "MongoDB",
+        "GCP",
+        "Azure DevOps Pipelines",
+        "Azure Cloud",
+        "Docker",
+        "Git",
+        "CI/CD"
+      ],
+      "translations": {
+        "es": {
+          "role": "Desarrollador Full Stack",
+          "summary": "Desarrollo de aplicaciones empresariales para clientes de banca y fintech: programas de lealtad, e-commerce y dropshipping. Implementación de arquitectura de microservicios, arquitectura hexagonal y entrega de funcionalidades end-to-end.",
+          "achievements": [
+            "Backend: Node.js, NestJS, Express, .NET Core, C#, TypeScript",
+            "Arquitectura: Microservicios, Arquitectura Hexagonal, REST APIs, Clean Code",
+            "Frontend: React, Next.js (SSR/SSG), Vue.js, TypeScript, Tailwind CSS",
+            "Estado y Testing: Redux, Zustand, TanStack Query, Jest, Vitest",
+            "Bases de Datos: PostgreSQL, Prisma ORM, SQL Server, MySQL, MongoDB",
+            "DevOps y Cloud: GCP, Azure DevOps Pipelines, Azure Cloud, Docker, Git, CI/CD"
+          ]
+        },
+        "en": {
+          "role": "Full Stack Developer",
+          "summary": "Development of enterprise applications for banking and fintech clients: loyalty programs, e-commerce, and dropshipping. Implementation of microservices architecture, hexagonal architecture, and end-to-end delivery.",
+          "achievements": [
+            "Backend: Node.js, NestJS, Express, .NET Core, C#, TypeScript",
+            "Architecture: Microservices, Hexagonal Architecture, REST APIs, Clean Code",
+            "Frontend: React, Next.js (SSR/SSG), Vue.js, TypeScript, Tailwind CSS",
+            "State & Testing: Redux, Zustand, TanStack Query, Jest, Vitest",
+            "Databases: PostgreSQL, Prisma ORM, SQL Server, MySQL, MongoDB",
+            "DevOps & Cloud: GCP, Azure DevOps Pipelines, Azure Cloud, Docker, Git, CI/CD"
+          ]
+        }
+      }
+    },
+    {
+      "key": "gml-software-middle-developer",
+      "company": "GML Software",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2022-11-01",
+      "endDate": "2023-02-01",
+      "isCurrent": false,
+      "technologies": [
+        "Blade",
+        "Vue.js",
+        "PHP",
+        "Laravel",
+        "MySQL"
+      ],
+      "translations": {
+        "es": {
+          "role": "Middle Developer",
+          "summary": "Implementación de funcionalidad a la medida para proyectos de Laravel. Soporte de aplicativos propios y desarrollo de nuevas características, en los distintos aplicativos.",
+          "achievements": [
+            "Frontend: Blade, Vue.js",
+            "Backend: PHP, Laravel",
+            "SQL: MySQL"
+          ]
+        },
+        "en": {
+          "role": "Middle Developer",
+          "summary": "Custom functionality implementation for Laravel projects. Application support and new feature development across multiple platforms.",
+          "achievements": [
+            "Frontend: Blade, Vue.js",
+            "Backend: PHP, Laravel",
+            "SQL: MySQL"
+          ]
+        }
+      }
+    },
+    {
+      "key": "150-porciento-s-a-s-backend-developer",
+      "company": "150 Porciento S.A.S",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2021-08-01",
+      "endDate": "2022-10-01",
+      "isCurrent": false,
+      "technologies": [
+        "Vue.js",
+        "jQuery",
+        "PHP",
+        "Wordpress",
+        "Drupal",
+        "Laravel",
+        "MySQL"
+      ],
+      "translations": {
+        "es": {
+          "role": "Backend Developer",
+          "summary": "Implementación de funcionalidad a la medida para proyectos de Wordpress, Drupal, Laravel. Creación de componentes dinámicos y manejo de Frontend con Vue.js.",
+          "achievements": [
+            "Frontend: Vue.js, jQuery",
+            "Backend: PHP, Wordpress, Drupal, Laravel",
+            "SQL: MySQL"
+          ]
+        },
+        "en": {
+          "role": "Backend Developer",
+          "summary": "Custom functionality implementation for Wordpress, Drupal, Laravel projects. Dynamic component creation and Vue.js frontend development.",
+          "achievements": [
+            "Frontend: Vue.js, jQuery",
+            "Backend: PHP, Wordpress, Drupal, Laravel",
+            "SQL: MySQL"
+          ]
+        }
+      }
+    },
+    {
+      "key": "fund-univ-tecnologico-comfenalco-desarrollador-web-analista-de-sistemas",
+      "company": "Fund. Univ. Tecnológico Comfenalco",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2019-10-01",
+      "endDate": "2021-04-01",
+      "isCurrent": false,
+      "technologies": [
+        "migración de Laravel 5.5 → 6 → 7 → 8 en aplicaciones PHP legacy",
+        "Bootstrap",
+        "Tailwind CSS",
+        "PHP",
+        "Laravel",
+        "Moodle",
+        "Wordpress",
+        "PostgreSQL"
+      ],
+      "translations": {
+        "es": {
+          "role": "Desarrollador Web / Analista de Sistemas",
+          "summary": "Proyectos: Plan Desempeño Docente, Preparatorio Derecho, Proyecto de Aula.",
+          "achievements": [
+            "Modernización: migración de Laravel 5.5 → 6 → 7 → 8 en aplicaciones PHP legacy",
+            "Frontend: Bootstrap, Tailwind CSS",
+            "Backend: PHP, Laravel, Moodle, Wordpress",
+            "SQL: PostgreSQL"
+          ]
+        },
+        "en": {
+          "role": "Web Developer / Systems Analyst",
+          "summary": "Projects: Teacher Performance Plan, Law Preparatory, Classroom Project.",
+          "achievements": [
+            "Modernization: Laravel 5.5 → 6 → 7 → 8 migration on legacy PHP applications",
+            "Frontend: Bootstrap, Tailwind CSS",
+            "Backend: PHP, Laravel, Moodle, Wordpress",
+            "SQL: PostgreSQL"
+          ]
+        }
+      }
+    },
+    {
+      "key": "vpixel-desarrollador-web-analista-de-sistemas",
+      "company": "VPixel",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2019-03-01",
+      "endDate": "2019-09-01",
+      "isCurrent": false,
+      "technologies": [
+        "Vue.js",
+        "PHP",
+        "Laravel",
+        "REST API",
+        "GraphQL",
+        "MySQL",
+        "PostgreSQL"
+      ],
+      "translations": {
+        "es": {
+          "role": "Desarrollador Web / Analista de Sistemas",
+          "summary": "Desarrollo Web (Panel de administración, Landing pages, E-commerce).",
+          "achievements": [
+            "Frontend: Vue.js",
+            "Backend: PHP, Laravel, REST API, GraphQL",
+            "SQL: MySQL, PostgreSQL"
+          ]
+        },
+        "en": {
+          "role": "Web Developer / Systems Analyst",
+          "summary": "Web Development (Admin panel, Landing pages, E-commerce).",
+          "achievements": [
+            "Frontend: Vue.js",
+            "Backend: PHP, Laravel, REST API, GraphQL",
+            "SQL: MySQL, PostgreSQL"
+          ]
+        }
+      }
+    },
+    {
+      "key": "vpixel-desarrollador-web-analista-de-sistemas-2018",
+      "company": "VPixel",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2018-08-01",
+      "endDate": "2019-03-01",
+      "isCurrent": false,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JS",
+        "PHP",
+        "MVC",
+        "Wordpress",
+        "MariaDB"
+      ],
+      "translations": {
+        "es": {
+          "role": "Desarrollador Web / Analista de Sistemas",
+          "summary": "Desarrollo de la plataforma colombiamar y asistencia técnica. Creación de plataforma turística dealyourfun.",
+          "achievements": [
+            "Diseño de la aplicación y estructura",
+            "Frontend: HTML, CSS, JS",
+            "Backend: PHP, MVC, Wordpress",
+            "SQL: MariaDB"
+          ]
+        },
+        "en": {
+          "role": "Web Developer / Systems Analyst",
+          "summary": "Development of colombiamar platform and technical assistance. Creation of dealyourfun tourism platform.",
+          "achievements": [
+            "Application design and architecture",
+            "Frontend: HTML, CSS, JS",
+            "Backend: PHP, MVC, Wordpress",
+            "SQL: MariaDB"
+          ]
+        }
+      }
+    },
+    {
+      "key": "sena-desarrollador-web-analista-de-sistemas",
+      "company": "SENA",
+      "location": "Cartagena",
+      "isRemote": false,
+      "startDate": "2018-02-01",
+      "endDate": "2018-07-01",
+      "isCurrent": false,
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JS",
+        "Bootstrap",
+        "PHP",
+        "Websocket",
+        "Arduino",
+        "Node.js",
+        "MariaDB"
+      ],
+      "translations": {
+        "es": {
+          "role": "Desarrollador Web / Analista de Sistemas",
+          "summary": "Diseño y desarrollo de un sistema de monitoreo remoto de signos vitales en pacientes críticos ventilados con atención domiciliaria, haciendo uso de tecnologías de hardware y software libre.",
+          "achievements": [
+            "Recopilación de información",
+            "Diseño de la aplicación y estructura",
+            "Frontend: HTML, CSS, JS, Bootstrap",
+            "Backend: PHP, Websocket, Arduino, Node.js",
+            "SQL: MariaDB"
+          ]
+        },
+        "en": {
+          "role": "Web Developer / Systems Analyst",
+          "summary": "Design and development of remote monitoring system for vital signs in critical ventilated patients with home care, using hardware and free software technologies.",
+          "achievements": [
+            "Information gathering",
+            "Application design and architecture",
+            "Frontend: HTML, CSS, JS, Bootstrap",
+            "Backend: PHP, Websocket, Arduino, Node.js",
+            "SQL: MariaDB"
+          ]
+        }
+      }
+    }
+  ],
+  "education": [
+    {
+      "key": "sena-tecnologo",
+      "institution": "Servicio Nacional de Aprendizaje (SENA)",
+      "startDate": "2016-04-01",
+      "endDate": "2018-04-01",
+      "isCurrent": false,
+      "translations": {
+        "es": {
+          "degree": "Tecnólogo",
+          "field": "Análisis y Desarrollo de Sistemas de Información",
+          "description": null
+        },
+        "en": {
+          "degree": "Technologist",
+          "field": "Information Systems Analysis and Development",
+          "description": null
+        }
+      }
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Curso básico de testing con PHP y Laravel",
+      "issuer": "Platzi",
+      "issuedDate": "2021-02-09",
+      "keywords": [
+        "PHP",
+        "Laravel",
+        "Vitest"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso de prework: configuración de entorno de desarrollo en Windows",
+      "issuer": "Platzi",
+      "issuedDate": "2021-04-02",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "English Online",
+      "issuer": "Platzi",
+      "issuedDate": "2021-05-20",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de computación básica",
+      "issuer": "Platzi",
+      "issuedDate": "2021-06-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de prework: configuración de entorno de desarrollo en macOS",
+      "issuer": "Platzi",
+      "issuedDate": "2021-06-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Asincronismo con JavaScript",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso básico de Vue.js",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de ECMAScript: historia y versiones de JavaScript",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de Webpack",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso Tailwind CSS",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de prework: configuración de entorno de desarrollo en macOS",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-12",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de API REST con Laravel",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-16",
+      "keywords": [
+        "PHP",
+        "Laravel",
+        "REST APIs"
+      ],
+      "published": true
+    },
+    {
+      "name": "Frontend Developer",
+      "issuer": "Platzi",
+      "issuedDate": "2021-07-19",
+      "keywords": [
+        "React",
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso básico de JavaScript",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-01",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso práctico de WordPress",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-02",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de closures y scope en JavaScript",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de JavaScript engine (V8) y el navegador",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso práctico de JavaScript",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de gestión de dependencias y paquetes con NPM",
+      "issuer": "Platzi",
+      "issuedDate": "2021-08-10",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de fundamentos de Node.JS",
+      "issuer": "Platzi",
+      "issuedDate": "2021-09-28",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de fundamentos de bases de datos",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-08",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Backend con Node.JS",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de backend con Node.js: API REST con Express.js",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-09",
+      "keywords": [
+        "Node.js",
+        "Express",
+        "REST APIs"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso de frontend developer",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-09",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "JS challenge",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-13",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso profesional de Vue.js",
+      "issuer": "Platzi",
+      "issuedDate": "2021-10-23",
+      "keywords": [
+        "Vue.js"
+      ],
+      "published": true
+    },
+    {
+      "name": "JS challenge",
+      "issuer": "Platzi",
+      "issuedDate": "2021-11-05",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso básico de manejo de datos Laravel con Eloquent ORM",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-13",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de introducción a Laravel 8",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-14",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de introducción a Laravel",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-15",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de introducción a PHP con Composer",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-17",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de introducción a Laravel 9",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-21",
+      "keywords": [
+        "PHP",
+        "Laravel"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso de desarrollo de aplicaciones en Laravel con TDD",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-23",
+      "keywords": [
+        "PHP",
+        "Laravel"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso de single page applications en Laravel con Inertia y Vue.js",
+      "issuer": "Platzi",
+      "issuedDate": "2022-05-28",
+      "keywords": [
+        "PHP",
+        "Laravel",
+        "Vue.js"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso básico de algoritmos y pensamiento lógico",
+      "issuer": "Platzi",
+      "issuedDate": "2022-06-11",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de programación orientada a objetos en PHP",
+      "issuer": "Platzi",
+      "issuedDate": "2022-06-11",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de manejo de datos en PHP",
+      "issuer": "Platzi",
+      "issuedDate": "2022-06-11",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de introducción a frameworks con PHP",
+      "issuer": "Platzi",
+      "issuedDate": "2022-06-19",
+      "keywords": [
+        "PHP"
+      ],
+      "published": true
+    },
+    {
+      "name": "Curso de apirest con PHP",
+      "issuer": "Platzi",
+      "issuedDate": "2022-06-19",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de fundamentos de matemáticas",
+      "issuer": "Platzi",
+      "issuedDate": "2025-12-01",
+      "keywords": [],
+      "published": false
+    },
+    {
+      "name": "Curso de Claude Code",
+      "issuer": "Platzi",
+      "issuedDate": "2025-12-08",
+      "keywords": [],
+      "published": true
+    },
+    {
+      "name": "Curso de pensamiento crítico para usar inteligencia artificial",
+      "issuer": "Platzi",
+      "issuedDate": "2026-09-28",
+      "keywords": [],
+      "published": true
+    },
+    {
+      "name": "Curso gratis de introducción a la inteligencia artificial",
+      "issuer": "Platzi",
+      "issuedDate": "2026-09-28",
+      "keywords": [],
+      "published": true
+    }
+  ]
+}

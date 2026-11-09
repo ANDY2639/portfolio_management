@@ -1,10 +1,10 @@
 ---
-import type { Certification } from '../../lib/types';
+import type { CertificationContent } from '@portfolio/data';
 import { useTranslations, formatDate } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
-  certifications: Certification[];
+  certifications: CertificationContent[];
   error: string | null;
   lang: Lang;
 }

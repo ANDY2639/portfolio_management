@@ -10,6 +10,8 @@
     "format:write": "turbo format:write",
     "check": "turbo check",
     "types:check": "turbo types:check",
+    "test": "turbo test",
+    "e2e": "playwright test",
     "clean:build": "turbo clean:build",
     "clean:nm": "turbo clean:nm",
     "clean": "turbo clean && pnpm dlx rimraf node_modules && pnpm dlx rimraf pnpm-lock.yaml"
@@ -26,6 +28,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "oxfmt": "^0.40.0",
     "oxlint": "^1.55.0",
     "oxlint-tsgolint": "^7.0.2006",

@@ -1,25 +1,25 @@
-# Plan del portfolio — v2.2 (consolidado, free tier, Neon)
+# Plan del portfolio — v2.3 (consolidado, free tier, Neon)
 
-> **Estado:** Fase 0 en ejecución (2026-11-07).
+> **Estado:** Fases 0 y 1 completadas (2026-11-09).
 > **Repo canónico:** `C:\Users\Administrador\Projects\portfolio_management` → remoto `ANDY2639/portfolio_management`
 > **Repo legacy:** `C:\Users\Administrador\Projects\portfolio` (archivado; respaldo en `%USERPROFILE%\Backups\github`)
-> **Última actualización:** 2026-11-07
-> **Cambio v2.2:** se reemplaza Supabase por **Neon** (Postgres + Auth + Object Storage) y se adopta **Drizzle ORM**.
+> **Última actualización:** 2026-11-09
+> **Cambio v2.3:** schema completo en Neon (17 tablas), seed real desde el CV, `packages/data` con Drizzle y eliminación de `packages/contracts`.
 
 **Objetivo:** conseguir empleo remoto como Full Stack.
 **Restricción:** costo $0, sin servicios de pago, máxima calidad percibida.
 
-### Decisiones v2.2
+### Decisiones v2.3
 
-| Decisión | v2.1 | v2.2 |
+| Decisión | v2.2 | v2.3 |
 |---|---|---|
-| Base de datos | Supabase Free | **Neon Free** (autosuspend, sin pausa manual) |
-| ORM | `@supabase/supabase-js` | **Drizzle ORM + drizzle-kit** |
-| Auth | Supabase Auth | **Neon Auth** (Managed Better Auth) |
-| Storage | Supabase Storage | **Neon Object Storage** (S3-compatible) |
-| Docker local | Opcional | **No se usa** (`pg_dump`/`psql` de Scoop) |
-| Repo remoto | `portfolio-v2` | **`portfolio_management`** (público) |
-| Repos viejos | — | `portfolio` y `portfolio-management` se eliminan (con backup) |
+| Base de datos | Neon Free | **Neon Free** (schema aplicado y sembrado) |
+| ORM | Drizzle ORM | **Drizzle ORM + `drizzle-kit`** (`db/migrations`) |
+| Multilenguaje | Columnas `_en` | **Tabla de traducciones** por entidad + `key` en inglés |
+| Contracts | Zod + ts-rest | **Eliminado**; validación Zod por app |
+| Docker local | No se usa | **No se usa**; migraciones y seed por red contra Neon |
+| Repo remoto | `portfolio_management` | **`portfolio_management`** (público) |
+| Repos viejos | Se eliminan | **Eliminados** (con backup) |
 
 ---
 
@@ -33,11 +33,12 @@ portfolio_management/
     web/        Astro 6 + Preact  → Vercel (proyecto 1)
     admin/      Next 16 + React 19 → Vercel (proyecto 2)
   packages/
-    contracts/  Zod (validación de formularios y API)
-    data/       Drizzle: schema, cliente, queries y mappers
-  db/           migraciones generadas por drizzle-kit + seeds
+    data/       Drizzle: schema, cliente, queries y tipos
+  db/           migraciones generadas por drizzle-kit
   docs/         plan, ADRs, runbooks, archive
 ```
+
+La validación Zod vive en cada app (contacto en web, formularios en admin). No hay paquete `contracts` compartido.
 
 **Por qué monorepo recortado:**
 
@@ -146,24 +147,31 @@ Neon Free ($0)
 
 ---
 
-### Fase 1 — Datos reales con Drizzle (1 semana)
+### Fase 1 — Datos reales con Drizzle (completada 2026-11-09)
 
-1. **Schema Drizzle** derivado de `docs/archive/supabase/migrations/portfolio_full.sql`:
-   - `profile`, `skills`, `experience`, `education`, `certifications`, `projects`.
-   - Nombres snake_case en DB, camelCase en los tipos generados.
-2. **`packages/data`:**
-   - `db/schema.ts`, `db/index.ts` (cliente pooled con `@neondatabase/serverless` o `postgres`).
-   - Queries tipadas: `getSiteContent()`, `getPostBySlug()`, `listProjects()`.
-   - Mappers para no tocar los componentes.
-3. **Migraciones:** `drizzle-kit generate` + `drizzle-kit migrate` contra `DATABASE_URL_UNPOOLED`.
-4. **Seed:** convertir los `insert` del SQL legacy a `db/seed.ts` (UTF-8 verificado).
-5. **Contracts:** solo Zod para formularios; eliminar ts-rest y los schemas desalineados.
-6. **Web:** reemplazar `portfolio-data.ts` y `supabase.ts` por `@portfolio/data`; borrar `types.ts` duplicado.
-7. **Env validado con Zod** en web y admin; fail-fast en producción.
-8. **Tests:** Vitest para mappers y validadores; fixture generado desde un dump real (`pg_dump --data-only`).
-9. **Scaffold Playwright** (home, idioma, tema).
+**Schema:** 17 tablas en Neon (11 de contenido + 6 de traducción).
 
-**DoD:** web y admin leen la misma capa Drizzle; migraciones reproducibles; tests verdes contra datos reales.
+- Contenido: `profile`, `skill_groups`, `skills`, `experience`, `education`, `certifications`, `projects`, `posts`, `project_media`, `contact_messages`, `audit_log`.
+- Traducción: `profile_translations`, `skill_group_translations`, `experience_translations`, `education_translations`, `project_translations`, `post_translations`.
+- Cada entidad tiene una `key` estable en inglés; las traducciones se resuelven por `locale` con fallback a `es`.
+- Skills por grupos del CV, sin niveles inventados.
+- Migraciones: `0000` (schema), `0001` (triggers `updated_at`), `0002` (identidad del profile).
+
+**`packages/data`:**
+
+- `src/schema/*` con Drizzle (`snake_case` en DB, `camelCase` en TS).
+- `src/client.ts` con `@neondatabase/serverless` + `drizzle-orm/neon-http`.
+- `src/queries.ts`: `loadContent(locale)`, `getSiteContent(locale)` (cache por locale), `getProfile`, `listProjects`.
+- `src/env.ts` con Zod (`DATABASE_URL`).
+- `seed/` con `data.json` generado desde `cv.es.yaml`, `cv.en.yaml` y `certificados.manifest.json`.
+
+**Datos sembrados:** 7 experiencias (ES/EN), 1 educación, 5 grupos de skills (46 skills), 43 certificaciones (12 publicadas), 0 proyectos.
+
+**Web:** `apps/web` consume `@portfolio/data`; se eliminaron `supabase.ts`, `portfolio-data.ts` y `types.ts`. `@supabase/supabase-js` y `packages/contracts` ya no existen.
+
+**Rol de DB:** `app_rw` (read_write) para runtime; el owner queda solo en `DATABASE_URL_UNPOOLED` para migraciones.
+
+**Tests:** Vitest de integración contra Neon (`loadContent` ES/EN) y Playwright smoke (home ES/EN). `pnpm build`, `pnpm lint`, `pnpm types:check` y `pnpm test` en verde.
 
 ---
 
@@ -183,7 +191,7 @@ Neon Free ($0)
 
 ### Fase 3 — Contenido: casos, blog y CV (1 semana) · `humanizer`, `media-use`
 
-**DB (migración Drizzle):** `projects` gana `slug`, `problem`, `role`, `outcome`, `metrics`, `cover_url`, `featured`, `year`; se agregan `posts` y `project_media`.
+**DB:** el schema ya incluye `projects` (con `key`, `problem`, `role`, `outcome`, `metrics`, `cover_url`, `featured`, `year`), `posts` y `project_media`. Fase 3 solo carga contenido, sin migraciones.
 
 **Casos (4-6):** `microservices/nexora`, `gen-anel`, `prowler`, `Ventori`, `automations/youtube`, `liquid-gauge`.
 Formato: contexto → problema → rol → decisiones → stack → resultado medible → demo/repo.
@@ -329,16 +337,26 @@ Actualizaciones: Dependabot/Renovate semanal, release-please, migraciones expand
 - [x] `pnpm install` + `pnpm build` verde (10 páginas)
 - [x] Repo `portfolio_management` público + branch protection
 - [x] Cero secretos en el historial
+- [x] Rol `app_rw` y connection strings separadas
+- [x] 17 tablas + triggers `updated_at` en Neon
+- [x] Seed desde el CV: 7 experiencias, 1 educación, 5 grupos/46 skills, 43 certificados (12 publicadas)
+- [x] `packages/data` con `loadContent`, tipos y cache por locale
+- [x] Web sin Supabase, renderizando contenido real
+- [x] `packages/contracts` y ts-rest eliminados
+- [x] `pnpm build`, `lint`, `types:check`, `test` y `e2e` en verde
+- [x] Docs y Engram actualizados
 
-### Notas de la Fase 0
+### Notas de las Fases 0 y 1
 
-- `pnpm build`: verde. La web compila y genera 10 páginas; el contenido sigue vacío porque aún lee Supabase (se corrige en Fase 1).
+- `pnpm build`: verde, 10 páginas con datos reales de Neon.
 - `pnpm types:check`: 0 errores.
-- `pnpm lint`: 9 errores preexistentes en `apps/web` (TypeScript/React) que se corrigen en Fase 2. Se añadió `oxlint-tsgolint` y se corrigieron dos reglas inválidas de la config.
-- Se eliminó el override global de `zod` (forzaba Zod 3 y rompía Astro 6, que requiere Zod 4).
+- `pnpm lint`: 0 errores y 3 warnings (asserción de tipos en `i18n/utils.ts` y `ThemeToggle.tsx`). Se corrigió el `ThemeToggle` a un menú accesible con `menuitemradio`.
+- `pnpm test`: 3 tests de integración contra Neon. `pnpm e2e`: 2 smoke tests.
+- Sin PostgreSQL local, sin Docker y sin Supabase. Migraciones y seed por red contra Neon.
+- Zod 4 convive con Astro 6; se eliminó el override global de Zod 3.
 
 ---
 
 ## 9. Próximo paso
 
-Cerrar la Fase 0 (build verde + push) y arrancar la Fase 1: schema Drizzle desde `portfolio_full.sql`, migraciones en Neon y `packages/data` consumido por web y admin.
+Arrancar la Fase 2: a11y, SEO, performance y narrativa de contratación. El contenido ya es real y el sitio compila con datos de Neon.

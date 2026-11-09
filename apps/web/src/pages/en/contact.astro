@@ -1,13 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getProfile } from '../../lib/portfolio-data';
+import { getProfile } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
 const lang: Lang = 'en';
 const t = useTranslations(lang);
 
-const { data: p } = await getProfile();
+const p = await getProfile(lang);
 ---
 <Layout title={`contact() — Andrés Guerrero`} description={t('meta.contact.description')} lang={lang} page="contact">
   <section class="section page-hero" aria-labelledby="contact-page-title">
