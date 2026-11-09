@@ -354,6 +354,8 @@ Actualizaciones: Dependabot/Renovate semanal, release-please, migraciones expand
 - `pnpm test`: 3 tests de integración contra Neon. `pnpm e2e`: 2 smoke tests.
 - Sin PostgreSQL local, sin Docker y sin Supabase. Migraciones y seed por red contra Neon.
 - Zod 4 convive con Astro 6; se eliminó el override global de Zod 3.
+- Dev: `apps/web/astro.config.mjs` inyecta `DATABASE_URL` en `process.env` con `loadEnv`. Sin eso, `astro dev` falla con `Invalid environment` aunque el build funcione.
+- Admin: `suppressHydrationWarning` en `<body>` por un atributo `location` inyectado por el navegador/extensión; el admin se reescribe en Fase 7.
 
 ---
 
