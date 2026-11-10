@@ -84,7 +84,7 @@ const t = useTranslations(lang);
     border-bottom: 1px solid var(--border);
   }
 
-  .state-err   { font-size: var(--text-sm); color: #ff5f57; margin-top: var(--sp-6); }
+  .state-err   { font-size: var(--text-sm); color: var(--danger); margin-top: var(--sp-6); }
   .state-empty { font-size: var(--text-sm); color: var(--fg-3); margin-top: var(--sp-6); font-style: italic; }
 
   .exp-list {
@@ -101,8 +101,8 @@ const t = useTranslations(lang);
   .exp-item:last-child { border-bottom: none; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(8px); }
+    to   { transform: translateY(0); }
   }
 
   .exp-header {
@@ -124,7 +124,7 @@ const t = useTranslations(lang);
 
   .exp-idx {
     font-size: var(--text-xs);
-    color: var(--fg-4);
+    color: var(--fg-3);
     font-weight: 700;
     flex-shrink: 0;
     width: 24px;

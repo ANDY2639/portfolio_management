@@ -1,29 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ExperienceSection from '../components/sections/ExperienceSection.astro';
-import EducationSection from '../components/sections/EducationSection.astro';
-import { getSiteContent } from '@portfolio/data';
-import { useTranslations } from '../i18n/utils';
-import type { Lang } from '../i18n/ui';
-
-const lang: Lang = 'es';
-const t = useTranslations(lang);
-
-const content = await getSiteContent(lang);
+import ExperiencePage from '../components/pages/ExperiencePage.astro';
 ---
 
-<Layout title={`experience() — Andrés Guerrero`} description={t('meta.experience.description')} lang={lang} page="experience">
-  <section class="section page-hero" aria-labelledby="exp-page-title">
-    <div class="container">
-      <p class="section-tag">experience.ts</p>
-      <h1 class="section-heading" id="exp-page-title">{t('experience.title')}</h1>
-      <p class="section-lead">{t('experience.subtitle')}</p>
-    </div>
-  </section>
-  <ExperienceSection experience={content.experience} error={null} lang={lang} />
-  <EducationSection education={content.education} error={null} lang={lang} />
-</Layout>
-
-<style>
-  .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
-</style>
+<ExperiencePage lang="en" />

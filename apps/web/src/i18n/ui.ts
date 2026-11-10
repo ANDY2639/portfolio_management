@@ -5,7 +5,7 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
-export const defaultLang: Lang = 'es';
+export const defaultLang: Lang = 'en';
 
 export const ui = {
   es: {
@@ -17,6 +17,8 @@ export const ui = {
     'nav.contact': 'Contacto',
     'nav.openMenu': 'Abrir menú',
     'nav.closeMenu': 'Cerrar menú',
+    'nav.skip': 'Saltar al contenido',
+    'nav.menu': 'Menú',
 
     // Theme
     'theme.light': 'Claro',
@@ -31,7 +33,8 @@ export const ui = {
     'hero.subtitle': 'Construyo productos digitales end-to-end con arquitectura limpia, microservicios e integración de IA en los flujos de entrega.',
     'hero.cta.primary': 'Ver experiencia',
     'hero.cta.secondary': 'Descargar CV',
-    'hero.available': 'Disponible para proyectos',
+    'hero.available': 'Disponible para full-time remoto',
+    'hero.availability': 'Full-time remoto · Fintech · COT (UTC-5) · respuesta en 24–48 h',
 
     // About
     'about.title': 'Sobre mí',
@@ -116,6 +119,22 @@ export const ui = {
     'meta.experience.description': 'Experiencia profesional de Andrés Guerrero — Idea Latente, GML Software, 150 Porciento y más.',
     'meta.skills.description': 'Skills de Andrés Guerrero — TypeScript, React, Next.js, PHP, Laravel, Go, Docker, Azure, AWS y más.',
     'meta.contact.description': 'Contactar a Andrés Guerrero — disponible para proyectos remote, consultoría y freelance.',
+
+    // CV
+    'cv.title': 'CV',
+    'cv.download': 'Descargar / imprimir PDF',
+    'cv.summary': 'Resumen',
+    'cv.experience': 'Experiencia',
+    'cv.education': 'Educación',
+    'cv.skills': 'Skills',
+    'cv.certifications': 'Certificaciones',
+    'cv.note': 'Versión imprimible. El PDF final se genera con RenderCV.',
+
+    // 404
+    'notFound.title': 'Página no encontrada',
+    'notFound.description': 'El recurso que buscás no existe o se movió.',
+    'notFound.back': 'Volver al inicio',
+    'notFound.contact': 'Escribir un mensaje',
   },
   en: {
     // Nav
@@ -126,6 +145,8 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.openMenu': 'Open menu',
     'nav.closeMenu': 'Close menu',
+    'nav.skip': 'Skip to content',
+    'nav.menu': 'Menu',
 
     // Theme
     'theme.light': 'Light',
@@ -140,7 +161,8 @@ export const ui = {
     'hero.subtitle': 'I build end-to-end digital products with clean architecture, microservices and AI-powered delivery workflows.',
     'hero.cta.primary': 'View experience',
     'hero.cta.secondary': 'Download CV',
-    'hero.available': 'Available for projects',
+    'hero.available': 'Open to full-time remote',
+    'hero.availability': 'Full-time remote · Fintech · COT (UTC-5) · reply within 24–48 h',
 
     // About
     'about.title': 'About me',
@@ -224,7 +246,23 @@ export const ui = {
     'meta.about.description': "About Andrés Guerrero — Full Stack Developer from Cartagena, Colombia. Experience, philosophy and work approach.",
     'meta.experience.description': "Andrés Guerrero's professional experience — Idea Latente, GML Software, 150 Porciento and more.",
     'meta.skills.description': "Andrés Guerrero's skills — TypeScript, React, Next.js, PHP, Laravel, Go, Docker, Azure, AWS and more.",
-    'meta.contact.description': 'Contact Andrés Guerrero — available for remote projects, consulting and freelance.',
+    'meta.contact.description': 'Contact Andrés Guerrero - available for remote projects, consulting and freelance.',
+
+    // CV
+    'cv.title': 'CV',
+    'cv.download': 'Download / print PDF',
+    'cv.summary': 'Summary',
+    'cv.experience': 'Experience',
+    'cv.education': 'Education',
+    'cv.skills': 'Skills',
+    'cv.certifications': 'Certifications',
+    'cv.note': 'Printable version. The final PDF is generated with RenderCV.',
+
+    // 404
+    'notFound.title': 'Page not found',
+    'notFound.description': 'The page you are looking for does not exist or has moved.',
+    'notFound.back': 'Back home',
+    'notFound.contact': 'Send a message',
   },
 } as const;
 

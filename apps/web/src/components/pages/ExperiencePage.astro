@@ -1,15 +1,21 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ExperienceSection from '../../components/sections/ExperienceSection.astro';
-import EducationSection from '../../components/sections/EducationSection.astro';
+import ExperienceSection from '../sections/ExperienceSection.astro';
+import EducationSection from '../sections/EducationSection.astro';
 import { getSiteContent } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
-const lang: Lang = 'en';
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 const t = useTranslations(lang);
+
 const content = await getSiteContent(lang);
 ---
+
 <Layout title={`experience() — Andrés Guerrero`} description={t('meta.experience.description')} lang={lang} page="experience">
   <section class="section page-hero" aria-labelledby="exp-page-title">
     <div class="container">
@@ -21,6 +27,7 @@ const content = await getSiteContent(lang);
   <ExperienceSection experience={content.experience} error={null} lang={lang} />
   <EducationSection education={content.education} error={null} lang={lang} />
 </Layout>
+
 <style>
   .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
 </style>

@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+const lang: Lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+const otherT = useTranslations(otherLang);
+const home = lang === 'es' ? '/es' : '/';
+const contact = lang === 'es' ? '/es/contact' : '/contact';
+const otherHome = otherLang === 'es' ? '/es' : '/';
+---
+
+<Layout
+  title={`404 — ${t('notFound.title')} | Andrés Guerrero`}
+  description={t('notFound.description')}
+  lang={lang}
+  page="not-found"
+  noindex
+>
+  <section class="section not-found" aria-labelledby="not-found-title">
+    <div class="container">
+      <p class="section-tag">404.ts</p>
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1 class="section-heading" id="not-found-title">{t('notFound.title')}</h1>
+      <p class="section-lead">{t('notFound.description')}</p>
+
+      <div class="nf-actions">
+        <a href={home} class="btn-term btn-primary">
+          <span aria-hidden="true">$ </span>{t('notFound.back')}
+        </a>
+        <a href={contact} class="btn-term btn-ghost">
+          <span aria-hidden="true">$ </span>{t('notFound.contact')}
+        </a>
+      </div>
+
+      <p class="nf-alt">
+        <a href={otherHome} hreflang={otherLang}>{otherT('notFound.title')}</a>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .nf-code {
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 18vw, 9rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--green);
+    letter-spacing: -0.04em;
+    margin-bottom: var(--sp-4);
+  }
+
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-top: var(--sp-8);
+  }
+
+  .btn-term {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    padding: var(--sp-2) var(--sp-5);
+    border: 1px solid;
+    transition: all var(--dur-fast);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-bg);
+  }
+  .btn-primary:hover {
+    background: var(--green);
+    color: var(--bg);
+  }
+
+  .btn-ghost {
+    border-color: var(--border-hi);
+    color: var(--fg-2);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--fg-3);
+    color: var(--fg);
+  }
+
+  .nf-alt {
+    margin-top: var(--sp-8);
+    font-size: var(--text-sm);
+  }
+  .nf-alt a {
+    color: var(--fg-3);
+    border-bottom: 1px solid var(--border);
+  }
+  .nf-alt a:hover {
+    color: var(--green);
+  }
+</style>

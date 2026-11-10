@@ -1,0 +1,88 @@
+---
+import type { ProfileContent } from '@portfolio/data';
+import { getPathForLocale } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  profile: ProfileContent | null;
+  noindex?: boolean;
+}
+
+const { title, description, lang, profile, noindex = false } = Astro.props;
+
+const site = Astro.site ?? new URL('https://portfolio-management.vercel.app');
+const canonical = new URL(Astro.url.pathname, site);
+const enUrl = new URL(getPathForLocale('en', Astro.url.pathname), site);
+const esUrl = new URL(getPathForLocale('es', Astro.url.pathname), site);
+const ogImage = new URL('/og.png', site);
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlternate = lang === 'es' ? 'en_US' : 'es_ES';
+
+const personId = `${site.origin}/#person`;
+const person = {
+  '@type': 'Person',
+  '@id': personId,
+  name: profile?.fullName ?? 'Andrés Felipe Guerrero Novoa',
+  jobTitle: profile?.title ?? 'Full Stack Developer',
+  url: site.origin,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Cartagena',
+    addressCountry: 'CO',
+  },
+  sameAs: [profile?.github, profile?.linkedin].filter(Boolean),
+};
+
+const profilePage = {
+  '@type': 'ProfilePage',
+  '@id': `${canonical.href}#page`,
+  url: canonical.href,
+  name: title,
+  inLanguage: lang,
+  isPartOf: {
+    '@type': 'WebSite',
+    '@id': `${site.origin}/#website`,
+    url: site.origin,
+    name: 'Andrés Guerrero — Portfolio',
+  },
+  about: { '@id': personId },
+};
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [person, profilePage],
+});
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<meta name="theme-color" content="#0a0a0a" />
+
+<link rel="canonical" href={canonical.href} />
+<link rel="alternate" hreflang="en" href={enUrl.href} />
+<link rel="alternate" hreflang="es" href={esUrl.href} />
+<link rel="alternate" hreflang="x-default" href={enUrl.href} />
+
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="Andrés Guerrero — Portfolio" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical.href} />
+<meta property="og:image" content={ogImage.href} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={ogLocaleAlternate} />
+<meta property="profile:first_name" content="Andrés" />
+<meta property="profile:last_name" content="Guerrero" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage.href} />
+
+<script is:inline type="application/ld+json" set:html={jsonLd} />

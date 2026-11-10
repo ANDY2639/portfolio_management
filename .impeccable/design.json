@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T00:00:00.000Z",
+  "title": "Design System: Andrés Guerrero Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "phosphor": {
+        "role": "primary",
+        "displayName": "Phosphor Green",
+        "canonical": "#00ff88",
+        "tonalRamp": ["#0a2a1a", "#0d3d26", "#0f5333", "#0f6b40", "#0f844d", "#00a35c", "#00c46e", "#00ff88"]
+      },
+      "phosphor-deep": {
+        "role": "primary",
+        "displayName": "Phosphor Deep",
+        "canonical": "#00733a",
+        "tonalRamp": ["#02140a", "#042314", "#062f1d", "#083d26", "#0a4c2f", "#006633", "#00733a", "#008a46"]
+      },
+      "amber": {
+        "role": "secondary",
+        "displayName": "Syntax Amber",
+        "canonical": "#e5a86b",
+        "tonalRamp": ["#2a1a08", "#4a2d0c", "#6b3f10", "#8a4b00", "#a85f14", "#c47a2e", "#df9a52", "#e5a86b"]
+      },
+      "info": {
+        "role": "tertiary",
+        "displayName": "Signal Blue",
+        "canonical": "#7eb8f7",
+        "tonalRamp": ["#0a1a2a", "#102a45", "#153a5f", "#1f5fa8", "#2f7ac4", "#4f97dd", "#6aa9ea", "#7eb8f7"]
+      },
+      "carbon": {
+        "role": "neutral",
+        "displayName": "Carbon",
+        "canonical": "#0a0a0a",
+        "tonalRamp": ["#050505", "#0a0a0a", "#111111", "#161616", "#1f1f1f", "#2e2e2e", "#3d3d3d", "#555555"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#111111",
+        "tonalRamp": ["#080808", "#0d0d0d", "#111111", "#161616", "#1c1c1c", "#242424", "#2e2e2e", "#3a3a3a"]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#1f1f1f",
+        "tonalRamp": ["#101010", "#161616", "#1b1b1b", "#1f1f1f", "#262626", "#2e2e2e", "#383838", "#444444"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#e8e8e8",
+        "tonalRamp": ["#4a4a4a", "#666666", "#808080", "#9a9a9a", "#b4b4b4", "#cccccc", "#dedede", "#e8e8e8"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f5f5f0",
+        "tonalRamp": ["#a8a8a3", "#c4c4bf", "#d8d8d4", "#e4e4df", "#eeeeea", "#f5f5f0", "#fafaf6", "#ffffff"]
+      },
+      "paper-ink": {
+        "role": "neutral",
+        "displayName": "Paper Ink",
+        "canonical": "#0a0a0a",
+        "tonalRamp": ["#0a0a0a", "#1c1c1c", "#333333", "#4a4a4a", "#666666", "#808080", "#a0a0a0", "#cccccc"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name only." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings." },
+      "title": { "displayName": "Title", "purpose": "Roles, card titles, project names." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs and section leads." },
+      "label": { "displayName": "Label", "purpose": "Section tags, command labels, metadata keys." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for entrances and state transitions." },
+      { "name": "dur-fast", "value": "120ms", "purpose": "Hover, focus and color changes." },
+      { "name": "dur-normal", "value": "220ms", "purpose": "Theme changes and larger surface moves." },
+      { "name": "reveal", "value": "600ms", "purpose": "Hero subtitle reveal; transform or opacity only, disabled by reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "desktop", "value": "1000px" },
+      { "name": "tablet", "value": "768px" },
+      { "name": "mobile", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Terminal command button. Outlined phosphor on carbon; fills on hover.",
+      "html": "<button class='ds-btn-primary'>cd ./experience</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: var(--green-bg); border: 1px solid var(--green); border-radius: 0; padding: 0.5rem 1.25rem; cursor: pointer; transition: background 120ms cubic-bezier(0.16,1,0.3,1), color 120ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: var(--green); color: var(--bg); } .ds-btn-primary:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary command. Transparent with a strong hairline.",
+      "html": "<button class='ds-btn-ghost'>mail --compose</button>",
+      "css": ".ds-btn-ghost { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-2); background: transparent; border: 1px solid var(--border-hi); border-radius: 0; padding: 0.5rem 1.25rem; cursor: pointer; transition: color 120ms, border-color 120ms; } .ds-btn-ghost:hover { color: var(--fg); border-color: var(--fg-3); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }"
+    },
+    {
+      "name": "Theme Switch",
+      "kind": "chip",
+      "description": "Three square icon buttons for light, dark and system. No dropdown.",
+      "html": "<fieldset class='ds-theme-switch'><legend class='ds-sr-only'>Theme</legend><button class='ds-theme-option' aria-label='Light'><svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='4'/><path d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'/></svg></button><button class='ds-theme-option' aria-label='Dark' aria-pressed='true'><svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/></svg></button><button class='ds-theme-option' aria-label='System'><svg viewBox='0 0 24 24' width='16' height='16' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='3' width='20' height='14' rx='2'/><path d='M8 21h8M12 17v4'/></svg></button></fieldset>",
+      "css": ".ds-theme-switch { display: inline-flex; align-items: center; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: 0; } .ds-theme-option { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; color: var(--fg-2); background: transparent; border: 0; border-right: 1px solid var(--border); border-radius: 0; cursor: pointer; } .ds-theme-option:last-child { border-right: 0; } .ds-theme-option:hover { color: var(--fg); background: var(--surface); } .ds-theme-option[aria-pressed='true'] { color: var(--green); background: var(--green-bg); } .ds-theme-option:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; } .ds-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "Mono command-style nav link with an active phosphor state.",
+      "html": "<nav class='ds-nav'><a class='ds-nav-link is-active' href='#'>Experience</a><a class='ds-nav-link' href='#'>Skills</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); } .ds-nav-link { display: inline-flex; align-items: center; padding: 0 1.25rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg-2); text-decoration: none; border-right: 1px solid var(--border); } .ds-nav-link:hover { color: var(--fg); background: var(--surface); } .ds-nav-link.is-active { color: var(--green); background: var(--green-bg); } .ds-nav-link:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Square metadata tag for certificate keywords and project tech.",
+      "html": "<span class='ds-tag'>TypeScript</span>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--fg-3); background: var(--surface); border: 1px solid var(--border); border-radius: 0; padding: 2px 8px; }"
+    },
+    {
+      "name": "Terminal Card",
+      "kind": "card",
+      "description": "Bordered surface used for jobs, certificates and the terminal window.",
+      "html": "<article class='ds-card'><h3 class='ds-card-title'>Full Stack Developer</h3><p class='ds-card-meta'>Idea Latente SAS · 2023–2026</p></article>",
+      "css": ".ds-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0; padding: 1.25rem 1.5rem; } .ds-card-title { font-family: var(--font-mono); font-size: 1rem; font-weight: 500; color: var(--fg); margin: 0 0 0.25rem; } .ds-card-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-3); margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Terminal Workbench",
+    "overview": "The portfolio behaves like a tool left open on a developer's desk: a quiet terminal, a status line, a file tree of evidence. It is not a retro CRT costume and it is not a generic dark SaaS dashboard. Surfaces are flat, divisions are 1px hairlines, and the phosphor green is a signal rather than a paint job. Type does most of the work; decoration is limited to the code-native details that a working interface would actually have.",
+    "keyCharacteristics": [
+      "Flat surfaces, 1px hairlines, no shadows.",
+      "Square corners; no pills, no soft cards.",
+      "JetBrains Mono at every level, including display.",
+      "Phosphor green reserved for state, action and section prefixes.",
+      "Syntax accents (amber, blue) used only where a value or number needs a different voice.",
+      "Keyboard-first: visible focus rings and reduced-motion support."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Phosphor green covers less than 10% of any screen. Its rarity is what makes an active state legible.", "section": "colors" },
+      { "name": "The No Green Body Rule", "body": "Green is a signal, not a reading color. Body copy uses Ink, Ink Muted or Ink Subtle.", "section": "colors" },
+      { "name": "The Single Voice Rule", "body": "Do not introduce a second typeface. If a section needs emphasis, change weight or size before changing family.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "If a component needs to separate itself, add a hairline or move one tonal step. Do not add a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the accent under 10% of the viewport; use it for state and action.",
+      "Do separate surfaces with 1px hairlines and tonal steps.",
+      "Do keep every interactive element keyboard-reachable with a visible focus ring.",
+      "Do use JetBrains Mono for display, body and labels.",
+      "Do respect prefers-reduced-motion.",
+      "Do keep the light theme as warm paper and darken the green to #00733a for AA."
+    ],
+    "donts": [
+      "Don't add shadows, glass, gradients or blurred halos to the product UI.",
+      "Don't round cards or buttons; the square edge is the identity.",
+      "Don't introduce a second typeface.",
+      "Don't use phosphor green for long body copy.",
+      "Don't animate opacity on text that carries information.",
+      "Don't fabricate metrics, logos, testimonials or client names."
+    ]
+  }
+}

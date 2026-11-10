@@ -13,8 +13,15 @@ export function useTranslations(lang: Lang) {
 }
 
 export function getLocalizedPath(lang: Lang, path: string): string {
-  if (lang === defaultLang) return path;
-  return `/${lang}${path}`;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+
+  if (lang === defaultLang) return normalized;
+  return normalized === '/' ? `/${lang}/` : `/${lang}${normalized}`;
+}
+
+export function getPathForLocale(locale: Lang, pathname: string): string {
+  const base = pathname.replace(/^\/es(?=\/|$)/, '') || '/';
+  return getLocalizedPath(locale, base);
 }
 
 export function getAlternateLang(lang: Lang): Lang {

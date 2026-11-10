@@ -1,11 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import SkillsSection from '../../components/sections/SkillsSection.astro';
+import SkillsSection from '../sections/SkillsSection.astro';
 import { getSiteContent } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
-const lang: Lang = 'en';
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const content = await getSiteContent(lang);
@@ -25,6 +29,7 @@ for (const cert of certifications) {
   }
 }
 ---
+
 <Layout title={`skills() — Andrés Guerrero`} description={t('meta.skills.description')} lang={lang} page="skills">
   <section class="section page-hero" aria-labelledby="skills-page-title">
     <div class="container">
@@ -35,6 +40,7 @@ for (const cert of certifications) {
   </section>
   <SkillsSection groups={skillGroups} lang={lang} certCountBySkill={certCountBySkill} />
 </Layout>
+
 <style>
   .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
 </style>

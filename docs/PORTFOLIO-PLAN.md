@@ -1,10 +1,10 @@
-# Plan del portfolio — v2.3 (consolidado, free tier, Neon)
+# Plan del portfolio — v2.4 (consolidado, free tier, Neon)
 
-> **Estado:** Fases 0 y 1 completadas (2026-11-09).
+> **Estado:** Fases 0, 1 y 2 completadas (2026-11-10).
 > **Repo canónico:** `C:\Users\Administrador\Projects\portfolio_management` → remoto `ANDY2639/portfolio_management`
 > **Repo legacy:** `C:\Users\Administrador\Projects\portfolio` (archivado; respaldo en `%USERPROFILE%\Backups\github`)
-> **Última actualización:** 2026-11-09
-> **Cambio v2.3:** schema completo en Neon (17 tablas), seed real desde el CV, `packages/data` con Drizzle y eliminación de `packages/contracts`.
+> **Última actualización:** 2026-11-10
+> **Cambio v2.4:** inglés por defecto (`/`), español en `/es`; SEO completo, a11y AA, fuentes self-hosted, `/cv` y `DESIGN.md`.
 
 **Objetivo:** conseguir empleo remoto como Full Stack.
 **Restricción:** costo $0, sin servicios de pago, máxima calidad percibida.
@@ -175,17 +175,21 @@ Neon Free ($0)
 
 ---
 
-### Fase 2 — Web: a11y, SEO, performance (1 semana) · `impeccable`
+### Fase 2 — Web: a11y, SEO, performance (completada 2026-11-10)
 
-1. Refactor es/en: deduplicar 5 páginas × 2 idiomas (`Astro.currentLocale`).
-2. A11y: skip-link visible, `ThemeToggle` accesible, reduced-motion, contraste AA, menú móvil como diálogo.
-3. SEO: canonical, hreflang, OG/Twitter, sitemap, robots, JSON-LD `Person` + `ProfilePage`, 404 bilingüe.
-4. Performance: JetBrains Mono self-host, `astro:assets`, presupuesto Lighthouse ≥95 y LCP < 2 s.
-5. Narrativa de contratación: disponibilidad, `/cv`, tiempos de respuesta, stack.
-6. `DESIGN.md` y `README.md` raíz con arquitectura y ADRs.
-7. Analytics sin cookies (Cloudflare o Vercel).
+**i18n:** inglés por defecto en `/`, español en `/es`. 5 componentes de página compartidos (`HomePage`, `AboutPage`, `SkillsPage`, `ExperiencePage`, `ContactPage`) y 10 rutas finas; se eliminó la duplicación ES/EN. El selector de idioma usa `getPathForLocale`.
 
-**DoD:** Lighthouse verde, `DESIGN.md` y README publicados, EN a la par de ES.
+**SEO:** `SEO.astro` con title, description, canonical, hreflang es/en/x-default, OG/Twitter, `og.png` 1200×630, JSON-LD `Person` + `ProfilePage`; `@astrojs/sitemap`, `robots.txt` generado y `404.astro` bilingüe.
+
+**A11y:** skip-link visible al foco, contraste AA en ambos temas (tokens `--fg-3`, `--warm`, `--danger`, `--info`), `prefers-reduced-motion`, foco global visible, menú móvil con foco atrapado/Escape/retorno de foco. Axe: 0 violaciones serious/critical en 12 rutas.
+
+**Performance:** JetBrains Mono self-hosted con `@fontsource` (5 pesos + itálica), preload del 400, sin Google Fonts. Se eliminó el typewriter con `setTimeout` (causaba forced reflow) y se reemplazó por un reveal CSS. Lighthouse: Performance 99, Accessibility 100, Best Practices 100, SEO 100.
+
+**Narrativa y CV:** línea de disponibilidad (full-time remoto, fintech, COT, respuesta 24–48 h), `/cv` y `/es/cv` print-friendly con botón de impresión, enlaces desde hero y footer.
+
+**Documentación:** `DESIGN.md` (The Terminal Workbench) + `.impeccable/design.json`, `README.md` raíz, `PRODUCT.md`.
+
+**Pendiente:** analytics se decide en Fase 4 (Vercel o Cloudflare), no en esta fase.
 
 ---
 
@@ -344,21 +348,29 @@ Actualizaciones: Dependabot/Renovate semanal, release-please, migraciones expand
 - [x] Web sin Supabase, renderizando contenido real
 - [x] `packages/contracts` y ts-rest eliminados
 - [x] `pnpm build`, `lint`, `types:check`, `test` y `e2e` en verde
+- [x] 10 rutas deduplicadas; inglés por defecto y español en `/es`
+- [x] SEO completo: canonical, hreflang, OG, JSON-LD, sitemap, robots y 404
+- [x] A11y AA: skip link, contraste, reduced-motion y menú móvil con foco atrapado
+- [x] Fuentes self-hosted; sin Google Fonts
+- [x] Lighthouse: 99 performance / 100 a11y / 100 best practices / 100 SEO
+- [x] `/cv` print-friendly y narrativa de disponibilidad
+- [x] `PRODUCT.md`, `DESIGN.md`, `.impeccable/design.json` y README raíz
 - [x] Docs y Engram actualizados
 
-### Notas de las Fases 0 y 1
+### Notas de las Fases 0, 1 y 2
 
-- `pnpm build`: verde, 10 páginas con datos reales de Neon.
-- `pnpm types:check`: 0 errores.
-- `pnpm lint`: 0 errores y 3 warnings (asserción de tipos en `i18n/utils.ts` y `ThemeToggle.tsx`). Se corrigió el `ThemeToggle` a un menú accesible con `menuitemradio`.
-- `pnpm test`: 3 tests de integración contra Neon. `pnpm e2e`: 2 smoke tests.
+- `pnpm build`: verde, 13 páginas con datos reales de Neon (10 rutas + CV + 404 + robots).
+- `pnpm types:check`: 0 errores; `pnpm lint`: 0 errores y 1 warning preexistente.
+- `pnpm test`: 3 tests de integración contra Neon. `pnpm e2e`: 17 tests (contenido, tema, SEO y axe en 12 rutas).
+- Lighthouse en el home: Performance 99, Accessibility 100, Best Practices 100, SEO 100.
 - Sin PostgreSQL local, sin Docker y sin Supabase. Migraciones y seed por red contra Neon.
 - Zod 4 convive con Astro 6; se eliminó el override global de Zod 3.
 - Dev: `apps/web/astro.config.mjs` inyecta `DATABASE_URL` en `process.env` con `loadEnv`. Sin eso, `astro dev` falla con `Invalid environment` aunque el build funcione.
 - Admin: `suppressHydrationWarning` en `<body>` por un atributo `location` inyectado por el navegador/extensión; el admin se reescribe en Fase 7.
+- El typewriter con `setTimeout` causaba forced reflow y TBT alto; se reemplazó por un reveal CSS.
 
 ---
 
 ## 9. Próximo paso
 
-Arrancar la Fase 2: a11y, SEO, performance y narrativa de contratación. El contenido ya es real y el sitio compila con datos de Neon.
+Arrancar la Fase 3: casos de estudio reales, blog y CV PDF bilingüe con RenderCV. El schema de `projects`, `posts` y `project_media` ya está listo; solo falta cargar contenido.

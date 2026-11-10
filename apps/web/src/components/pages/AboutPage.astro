@@ -4,7 +4,11 @@ import { getProfile } from '@portfolio/data';
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 
-const lang: Lang = 'en';
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const p = await getProfile(lang);
@@ -39,6 +43,7 @@ const p = await getProfile(lang);
             <li class="prop"><span class="prop-key">email</span><span class="sep">:</span><a class="prop-link" href={`mailto:${p?.email ?? 'dev.andres.guerrero@gmail.com'}`}>"{p?.email ?? 'dev.andres.guerrero@gmail.com'}"</a></li>
           </ul>
         </div>
+
         <div class="prop-block">
           <p class="prop-block-title">// values</p>
           <ul class="props">
@@ -53,28 +58,91 @@ const p = await getProfile(lang);
 </Layout>
 
 <style>
-  .page-hero { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding-block: var(--sp-20) var(--sp-10); }
+  .page-hero {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding-block: var(--sp-20) var(--sp-10);
+  }
+
   .about-body { background: var(--bg); border-bottom: 1px solid var(--border); }
-  .about-grid { display: grid; grid-template-columns: 1fr 360px; gap: var(--sp-16); align-items: start; }
-  .about-text { display: flex; flex-direction: column; gap: var(--sp-6); border-left: 2px solid var(--border); padding-left: var(--sp-6); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: var(--sp-16);
+    align-items: start;
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    border-left: 2px solid var(--border);
+    padding-left: var(--sp-6);
+  }
+
   .about-lead { font-size: var(--text-lg); color: var(--fg-2); line-height: 1.85; font-weight: 300; }
   .about-p    { font-size: var(--text-base); color: var(--fg-2); line-height: 1.85; }
   .about-p-dim { color: var(--fg-3); font-style: italic; }
-  .about-sidebar { display: flex; flex-direction: column; gap: var(--sp-6); position: sticky; top: calc(56px + var(--sp-8)); }
-  .prop-block { border: 1px solid var(--border); background: var(--surface); overflow: hidden; }
-  .prop-block-title { font-size: var(--text-xs); color: var(--fg-3); font-style: italic; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border); background: var(--surface-2); }
-  .props { list-style: none; }
-  .prop { display: flex; align-items: baseline; gap: var(--sp-2); padding: var(--sp-2) var(--sp-4); border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
+
+  .about-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    position: sticky;
+    top: calc(56px + var(--sp-8));
+  }
+
+  .prop-block {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .prop-block-title {
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    font-style: italic;
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+
+  .props {
+    list-style: none;
+  }
+
+  .prop {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-4);
+    border-bottom: 1px solid var(--border);
+    font-size: var(--text-sm);
+  }
   .prop:last-child { border-bottom: none; }
-  .prop-text { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
+
+  .prop-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--border);
+    font-size: var(--text-sm);
+  }
   .prop-text:last-child { border-bottom: none; }
+
   .prop-key   { color: var(--fg-2); flex-shrink: 0; min-width: 90px; }
   .sep        { color: var(--fg-3); flex-shrink: 0; }
-  .prop-str   { color: #e5a86b; }
-  .prop-num   { color: #7eb8f7; }
+  .prop-str   { color: var(--warm); }
+  .prop-num   { color: var(--info); }
   .prop-green { color: var(--green); }
   .prop-val   { color: var(--fg-3); line-height: 1.6; font-size: var(--text-xs); }
-  .prop-link  { color: #e5a86b; transition: color var(--dur-fast); }
+  .prop-link  { color: var(--warm); transition: color var(--dur-fast); }
   .prop-link:hover { color: var(--green); }
-  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } .about-sidebar { position: static; } }
+
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-sidebar { position: static; }
+  }
 </style>
