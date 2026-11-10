@@ -16,6 +16,9 @@ out
 test-results
 playwright-report
 
+# Impeccable
+.impeccable/config.local.json
+
 # Environment
 .env*
 !.env.example
